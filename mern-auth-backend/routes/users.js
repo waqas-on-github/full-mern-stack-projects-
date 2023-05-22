@@ -9,11 +9,11 @@ const router = Router()
 router.post('/register' , userCTRL.register )
 router.post('/login' ,   userCTRL.login )
 router.post('/logout' , userCTRL.logout)
-router.patch('/update' ,  userCTRL.update)
+router.patch('/update/:id' ,  userCTRL.update)
 
 //----------------> privite routes <-------------------- 
-router.get('/profile' , isauthed ,  userCTRL.profile ) 
-router.post('/remove/:id' ,    userCTRL.deleteuser)
+router.get('/profile' , isauthed,  userCTRL.profile ) 
+router.post('/remove/:id' , isauthed , userCTRL.deleteuser)
 
 
 

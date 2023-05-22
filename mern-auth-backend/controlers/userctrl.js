@@ -1,5 +1,6 @@
 import { User } from '../models/usermodel.js';
 import { geteratetoken } from '../utils/generatetoken.js';
+import bcrypt from 'bcryptjs'
 
 // Register user
 async function register(req, res) {
@@ -83,8 +84,23 @@ res.json({
 
 
 // Update user profile
-function update(req, res) {
-  res.send('Updating profile...');
+async function update(req, res) {
+  const id = req.params.id;
+   console.log(req.body);
+
+   if(req.body.password) {
+     const hashed = await    bcrypt.hash(req.body.password , 10)
+     req.body.password = hashed 
+   }
+ const data = req.body
+
+
+   User.findByIdAndUpdate(id , data  , {new:true})
+   .then((user ) => {
+    res.json(user)
+   }).catch((err) => {
+    res.json(err)
+   })
 }
 
 // Get profiles
