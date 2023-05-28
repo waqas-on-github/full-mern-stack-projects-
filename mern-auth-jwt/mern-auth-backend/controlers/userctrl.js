@@ -7,12 +7,12 @@ async function register(req, res) {
   const { name, email, password } = req.body;
  
   if (!name || !email || !password) {
-    return res.status(400).json({ error: 'All fields are required' });
+    return res.json({ error: 'All fields are required' });
   }
   
  const userExist = await User.findOne({ email });
    if (userExist) {
-      return res.status(400).json({ error: 'User already exists' });
+      return res.json({ error: 'User already exists' });
     }
     
   const user = await   User.create({ name, email, password });

@@ -1,18 +1,73 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState  , useEffect} from 'react';
+import { Link, useActionData } from 'react-router-dom';
 import { Form, Button, Row, Col } from 'react-bootstrap';
+import { useRegisterMutation } from '../../slices/usersapislice';
+import { useDispatch , useSelector } from 'react-redux';
+import { setCredentials } from '../../slices/authsclice';
+import { useNavigate } from 'react-router-dom';
 
 import FormContainer from '../components/Formcontainer';
+import { toast } from 'react-toastify';
 const RegisterScreen = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [registeruser , { isError , isSuccess , isLoading} ] =useRegisterMutation() 
+  const userinfo  = useSelector((state ) => state.auth.userinfo)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
+
+  useEffect (() => {
+    if(userinfo) {
+      navigate('/')
+    }
+    } , [userinfo, navigate])
+
+
+
+
+  const userdata = {
+    name :name , email : email , password : password , confirmPassword : confirmPassword
+  }
+
+ 
+
+
 
   const submitHandler = async (e) => {
     e.preventDefault();
-    console.log('submit');
-  };
+
+   if(userdata.password !== userdata.confirmPassword){
+    toast.error("password should be same ")
+   }
+  else {
+
+  
+   try {
+
+
+    
+      const res = await registeruser(userdata).unwrap()
+    if (!res.error) {
+
+      dispatch(setCredentials(res))
+     navigate('/')
+    }
+    else {
+      toast.error(res.error)
+      navigate('/')
+    }
+
+
+     
+
+   } catch (error) {
+    toast.error(error.message)
+   }  
+  }
+  };  
 
   return (
 <FormContainer>  

@@ -29,7 +29,18 @@ export const userapislice = apislice.injectEndpoints({
      credentials: 'include',
 
     })
-   })
+   }), 
+
+
+   Register : builder.mutation({
+    query : (data) => ({
+       url :'users/register',
+       method : 'POST',
+       body : data ,
+       credentials: 'include'
+
+    })
+   }) 
 
       
  })
@@ -37,6 +48,6 @@ export const userapislice = apislice.injectEndpoints({
 })
 
 
-export const  { useLoginMutation  , useGetprofilesQuery  , useLogoutMutation } = userapislice
+export const  { useLoginMutation  , useGetprofilesQuery  , useLogoutMutation , useRegisterMutation } = userapislice
 
 
