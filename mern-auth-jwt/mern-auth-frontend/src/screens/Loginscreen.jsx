@@ -21,7 +21,7 @@ const LoginScreen = () => {
         
       const res= await login({email , password}).unwrap()
       dispatch(setCredentials(res))
-      console.log(res);
+     
       toast.success("welcome")
          navigate('/')
     } catch (error) {
@@ -42,11 +42,11 @@ const navigate = useNavigate()
 
 const userinfo = useSelector((state ) => state.auth.userInfo)
 
-useEffect (() => {
-if(userinfo) {
-  navigate('/')
-}
-} , [userinfo  , navigate])
+ useEffect (() => {
+ if(userinfo) {
+   navigate('/')
+ }
+ } , [userinfo  , navigate])
 
 
   return (

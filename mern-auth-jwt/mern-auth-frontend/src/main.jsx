@@ -15,6 +15,8 @@ import { Provider } from 'react-redux'
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import LoginScreen from './screens/Loginscreen'
 import RegisterScreen from './screens/Registerscreen'
+import Priviteroute from './components/Priviteroute'
+import Profile from './screens/Profile'
 
 const router = createBrowserRouter([
   {
@@ -32,6 +34,17 @@ const router = createBrowserRouter([
           path:'register',
           element:<RegisterScreen/>
         }
+,
+       {
+         path : '' ,
+         element : <Priviteroute/>,
+         children : [
+          {
+            path : 'profile' , 
+            element : <Profile/>
+          }
+         ]
+      }
 
     ]
   }

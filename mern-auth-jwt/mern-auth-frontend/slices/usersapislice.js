@@ -7,26 +7,30 @@ export const userapislice = apislice.injectEndpoints({
  endpoints : (builder) => ({
     login: builder.mutation({
         query: (data) => ({
-          url: 'users/login',
+          url: 'api/users/login',
           method: 'POST',
           body: data,
           credentials: 'include',
+             mode: "cors"
+     
         }),
       }),
 
    Getprofiles : builder.query({
     query : () => ({
-        url :'users/profile',
-        method : 'GET'
+        url :'api/users/profile',
+        method : 'GET',
+        mode: "cors"
     })
 
    }), 
 
    Logout : builder.mutation({
     query :  () => ({
-     url : 'users/logout',
+     url : 'api/users/logout',
      method : 'POST',
      credentials: 'include',
+     mode: "cors"
 
     })
    }), 
@@ -34,20 +38,37 @@ export const userapislice = apislice.injectEndpoints({
 
    Register : builder.mutation({
     query : (data) => ({
-       url :'users/register',
+       url :'api/users/register',
        method : 'POST',
        body : data ,
-       credentials: 'include'
+       credentials: 'include',
+       mode: "cors"
 
     })
-   }) 
+   }) ,
+
+   Update :  builder.mutation({
+    query : (data) => ({
+       url :'api/users/update',
+       body : data ,
+       method: 'PATCH',
+       mode: "cors"
+    })
+   }) ,
+
 
       
  })
 
-})
+}) 
 
 
-export const  { useLoginMutation  , useGetprofilesQuery  , useLogoutMutation , useRegisterMutation } = userapislice
+export const  {
+   useLoginMutation  ,
+   useGetprofilesQuery ,
+   useLogoutMutation ,
+   useRegisterMutation ,
+   useUpdateMutation ,
+  } = userapislice
 
 

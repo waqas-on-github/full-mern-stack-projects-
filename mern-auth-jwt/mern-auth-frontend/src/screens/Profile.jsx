@@ -1,72 +1,58 @@
 import { useState  , useEffect} from 'react';
-import { Link, useActionData } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
-import { useRegisterMutation } from '../../slices/usersapislice';
+import { Form, Button, } from 'react-bootstrap';
+import { useUpdateMutation } from '../../slices/usersapislice';
 import { useDispatch , useSelector } from 'react-redux';
 import { setCredentials } from '../../slices/authsclice';
 import { useNavigate } from 'react-router-dom';
 
 import FormContainer from '../components/Formcontainer';
 import { toast } from 'react-toastify';
-const RegisterScreen = () => {
+
+const Profile = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [registeruser , { isError , isSuccess , isLoading} ] =useRegisterMutation() 
   const userinfo  = useSelector((state ) => state.auth.userInfo)
   const dispatch = useDispatch()
   const navigate = useNavigate()
+   
+   const  [ update , {res}] = useUpdateMutation()
+
+ 
+useEffect (() => {
+ setName(userinfo?.name)
+ setEmail(userinfo?.email)
+}  , [userinfo.name , userinfo.email])
 
 
-  useEffect (() => {
-    if(userinfo) {
-      toast.error("user already registerd")
-      navigate('/')
-    }
-    } , [userinfo, navigate])
-
-
-
-
-  const userdata = {
-    name :name , email : email , password : password , confirmPassword : confirmPassword
-  }
 
  
 
 
 
-  const submitHandler = async (e) => {
+const submitHandler = async (e) => {
     e.preventDefault();
-
-   if(userdata.password !== userdata.confirmPassword){
-    toast.error("password should be same ")
-   }
-  else {
-
   
+   
    try {
-      const res = await registeruser(userdata).unwrap()
-    if (!res.error) {
-
-      dispatch(setCredentials(res))
-      
-    }
-    else {
-      toast.error(res.error)
-    
-    }
+       
+    const res = await  update( { _id : userinfo.id ,  name , email, password }).unwrap()
+    dispatch(setCredentials(res))
+    navigate('/login')
 
    } catch (error) {
-    toast.error(error.message)
-   }  
-  }
+    toast.error(error.message )
+   }
+    
+
+
+  
   };  
 
   return (
 <FormContainer>  
-      <h1>Register</h1>
+      <h1>Update </h1>
       <Form onSubmit={submitHandler}>
         <Form.Group className='my-2' controlId='name'>
           <Form.Label>Name</Form.Label>
@@ -108,17 +94,13 @@ const RegisterScreen = () => {
         </Form.Group>
 
         <Button type='submit' variant='primary' className='mt-3'>
-          Register
+          Update 
         </Button>
       </Form>
 
-      <Row className='py-3'>
-        <Col>
-          Already have an account? <Link to={`/login`}>Login</Link>
-        </Col>
-      </Row>
+     
 </FormContainer>
   );
 };
 
-export default RegisterScreen;
+export default Profile;
