@@ -4,16 +4,23 @@ import { isauthed } from '../middlewares/isauthed.js'
 
 const router = Router()
 
-// GET localhost:3000/users
+// GET localhost:3000/api
 // ----------------> public routes <------------------ 
-router.post('/register' , userCTRL.register )
-router.post('/login' ,   userCTRL.login )
-router.post('/logout' , userCTRL.logout)
-router.patch('/update/:id' ,  userCTRL.update)
+
+
+router.get('/' , (req, res) => {
+    res.send("api is running ...")
+})
+
+
+router.post('/users/register' , userCTRL.register )
+router.post('/users/login' ,   userCTRL.login )
+router.post('/users/logout' , userCTRL.logout)
+router.patch('/users/update' ,  userCTRL.update)
 
 //----------------> privite routes <-------------------- 
-router.get('/profile' ,   userCTRL.profile ) 
-router.post('/remove/:id' , isauthed , userCTRL.deleteuser)
+router.get('/users/profile' ,   userCTRL.profile ) 
+router.post('/users/remove/:id' , isauthed , userCTRL.deleteuser)
 
 
 

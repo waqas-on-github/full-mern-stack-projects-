@@ -36,6 +36,7 @@ async function register(req, res) {
 // Login
 async function login(req, res) {
   let { email, password } = req.body;
+  console.log(req.body);
 
   try {
     const user = await User.findOne({ email });
@@ -92,7 +93,9 @@ res.json({
 
 // Update user profile
 async function update(req, res) {
-  const id = req.params.id;
+console.log(req.body);
+
+  const id = req.body._id;
   
 
    if(req.body.password) {
@@ -101,10 +104,16 @@ async function update(req, res) {
    }
  const data = req.body
 
-
    User.findByIdAndUpdate(id , data  , {new:true})
-   .then((user ) => {
-    res.json(user)
+   .then((user) => {
+
+  res.json({
+      id: user._id,
+      name: user.name,
+      email: user.email,
+    })
+
+    
    }).catch((err) => {
     res.json(err)
    })

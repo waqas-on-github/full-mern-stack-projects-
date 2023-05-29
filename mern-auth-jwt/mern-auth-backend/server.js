@@ -16,14 +16,26 @@ import cookieParser from 'cookie-parser'
 
 // create the express app
 const app = express()
-app.use(function(req, res, next) {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:5173');
-  res.setHeader('Access-Control-Allow-Credentials', 'true');
+
+
+
+
+
+app.use(cors());
+
+app.use((req, res, next) => {
+  res.header('Access-Control-Allow-Credentials', true);
+  res.header('Access-Control-Allow-Origin', 'http://localhost:5173');
+  res.header('Access-Control-Allow-Methods', 'GET, POST, PATCH, DELETE');
+  res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept'
+  );
   next();
 });
 
 
-app.use(cors())
+
 
 
 // view engine setup
@@ -42,7 +54,7 @@ app.use(
 
 // mount imported routes
 app.use('/', indexRouter)
-app.use('/users', usersRouter)
+app.use('/api', usersRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
