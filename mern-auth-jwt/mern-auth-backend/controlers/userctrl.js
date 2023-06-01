@@ -93,7 +93,6 @@ res.json({
 
 // Update user profile
 async function update(req, res) {
-console.log(req.body);
 
   const id = req.body._id;
   
@@ -113,7 +112,7 @@ console.log(req.body);
       email: user.email,
     })
 
-    
+
    }).catch((err) => {
     res.json(err)
    })
