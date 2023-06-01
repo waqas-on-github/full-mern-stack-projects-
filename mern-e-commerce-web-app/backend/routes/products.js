@@ -11,8 +11,6 @@ router.get('/', function(req, res) {
 })
 
 
-
-
 router.get('/:id' , (req, res) => {
 const product = products.find((item ) => item._id === req.params.id)
   res.json(product)
