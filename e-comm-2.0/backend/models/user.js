@@ -1,7 +1,9 @@
 import mongoose from "mongoose";
 import { authroles } from "../utils/AuthRoles.js";
 import bcrypt from "bcryptjs"
-import { Jwt } from "jsonwebtoken";
+import  Jwt  from "jsonwebtoken";
+import crypto from  'crypto'
+
 const userschema = mongoose.Schema (
     {
 
@@ -66,9 +68,20 @@ userschema.methods={
 
     getJWTtoken : function () {
         Jwt.sign({_id:this._id}  , process.env.SECRET  , { expiresin : '10d'})
-    }
+    } ,
 
+  generateforgotpasswordtoken : function () {
 
+     // generate token 
+     const forgotToken = crypto.randombytes(20).tostring('hex') 
+    // encrypt generated toke by crypto 
+    this.frogotPasswordToken = crypto .createHash("sha256").update(forgotToken).digest('hex')
+    // time for token to expire 
+    this.frogotPasswordExpairy = Date.now()  + 20 * 60 * 1000
+   
+    return forgotToken  
+
+    } 
 
 } ;
 
