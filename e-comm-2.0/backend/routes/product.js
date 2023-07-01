@@ -20,6 +20,11 @@ router.delete('/product/delete/:id' , deleteproduct)
 
 
 
+
+
+
+
+
 export {
     router
 }
