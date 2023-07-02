@@ -5,19 +5,19 @@ import mongoose from "mongoose";
     name :  {
         type : String , 
         required : [ true ,"product name is required"] ,  
+        maxlength : [120  , " product name  should not be more then 120 chars "] ,
         trim : true 
     },
 
     description : {
         type : String , 
         required : [ true ,"product description  is required"] 
-
     },  
- 
 
-     price : {
+     price : {  
         type : Number , 
-        required : [true , "product price is required"]
+        required : [true , "product price is required"] , 
+        maxlength : [5 , "product price shoud note be more then 5 chars"]
      } , 
 
      rating  : {
@@ -25,16 +25,12 @@ import mongoose from "mongoose";
         default : 0
      }, 
 
-    images : [{
+    photos : [{
 
-        public_id : {
+       secure_url : {
             type : String,
             required : [true ,' images are requrired' ]
-        } , 
-        url: {
-            type : String,
-            required : true
-        }
+        } 
     } ], 
 
 
@@ -52,8 +48,19 @@ import mongoose from "mongoose";
         type : Number , 
         required : [true , "please enter product stock"],
         maxlength : [4 , "stock can't exceed more the 4 characters"] ,
-        default : 1
+        default : 0
     },
+    sold : {
+      type : Number , 
+      required : [true , "please enter product stock"],
+      maxlength : [4 , "stock can't exceed more the 4 characters"] ,
+      default : 0
+  },
+   
+  collectionId : {
+    ref  : "Collection" , 
+    type : mongoose.Schema.Types.ObjectId
+  },
 
    numberofReviews  : {
     type :Number    , 
@@ -78,6 +85,10 @@ import mongoose from "mongoose";
 
      }
    ]
+
+
+
+
 
  } , {
     timestamps : true 

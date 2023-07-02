@@ -1,4 +1,4 @@
-import { Product } from "../models/Productmodel.js"
+import { Product } from "../models/product.schema.js.js"
 
 
 
