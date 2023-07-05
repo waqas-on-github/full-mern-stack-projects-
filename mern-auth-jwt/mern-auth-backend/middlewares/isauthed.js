@@ -4,11 +4,7 @@ import {User} from '../models/usermodel.js'
 
  async function isauthed (req, res , next ) {
     const token = req.cookies.token;
-    
-
-
-    
-
+  
     if(token) {
       try {
         const decoded = jwt.verify(token , process.env.SECRET)
