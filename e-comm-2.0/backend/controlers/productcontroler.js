@@ -2,6 +2,15 @@ import { Product } from "../models/product.schema.js.js"
 
 
 
+const  tesimg =  async(req, res ) => {
+ await cloudinary.v2.uploader.upload("public/images/Screenshot from 2023-04-30 13-41-08.png",
+  { public_id: "olympic_flag" }, 
+  function(error, result) {console.log(result); });
+}
+
+
+
+
 async  function  createproduct (req, res) {
     try{
         const product = await Product.create(req.body) 
@@ -127,7 +136,7 @@ export {
     allproducts ,
     getsingleproduct, 
     updateproduct , 
-    deleteproduct
+    deleteproduct , tesimg
 }
 
 
