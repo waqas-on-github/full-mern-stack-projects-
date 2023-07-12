@@ -9,10 +9,17 @@
 </head>
 <body>
   <h1><%= title %></h1>
-  <form action="/" method="post"  enctype="multipart/form-data" > 
-   <input type="file" name = "fileimage" value="myvalue ">
+  <form action="/upload" method="post"  enctype="multipart/form-data" > 
+   <input type="file" name = "fileimage" value="myvalue" >
    <button type="submit"> upload</button>
 
   </form>
+  <form action="/uploadimages" method="post"  enctype="multipart/form-data" > 
+    <input type="file" name = "fileimages" value="myvalue" multiple >
+    <button type="submit"> upload images </button>
+ 
+   </form>
+
+<img src="https://res.cloudinary.com/dzuzxgmss/image/upload/v1689170768/am3mcjfhbrwinvcemvgz.png" alt="">
 </body>
 </html>

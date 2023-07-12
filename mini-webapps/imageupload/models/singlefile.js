@@ -2,10 +2,13 @@ import mongoose from "mongoose";
 
 
   const fileschema = mongoose.Schema({
-    photo :  {
+    photo :[ 
+      {
+      secur_url : {
         type : String , 
         required : true
-    }
+    }}
+]
   })
 
 

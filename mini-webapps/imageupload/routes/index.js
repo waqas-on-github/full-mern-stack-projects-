@@ -1,7 +1,18 @@
 import { Router } from 'express';
 import multer from 'multer';
+import cloudnarconfig from '../config/cloudnarconfig.js';
+import { log } from 'node:console';
+import fs from "node:fs/promises"
+import { uploadimages } from '../controlers/multiplefiles.js';
+// const data = await fs.readdir("uploads/")
 
 
+// data.forEach( async (element ) => {
+//    await fs.unlink(element)
+  
+// })
+
+const cloudinary = cloudnarconfig()
 
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -22,17 +33,38 @@ const router = Router();
 router.get('/', function(req, res) {
   res.render('index', { title: 'Express' });
 });
+router.post("/uploadimages" , upload.array('fileimages') , uploadimages )
 
 // POST /uploads
-router.post('/', upload.single('fileimage'), ( req, res) => {
+router.post('/upload', upload.single('fileimage' ), ( req, res) => {
 
-  console.log(req.file);
   if (!req.file) {
-    res.status(400).send('No file selected');
-    return;
-  }
+    return  res.status(400).send('No file selected');
+   
+ }
 
-  res.send('File uploaded');
+ log(req.file.path)
+
+try {
+   cloudinary.uploader.upload(req.file.path , (err , result ) => {
+    if(err) {
+      console.log(err);
+      return res.status(500).json({
+        err : err
+      })
+    }
+     res.json({
+      url: result.secure_url
+     })
+   } )
+
+} catch (error) {
+  return res.status(500).json({
+    err : err.message
+  })
+ 
+}
+
 });
 
-export { router };
+export { router  , storage};
