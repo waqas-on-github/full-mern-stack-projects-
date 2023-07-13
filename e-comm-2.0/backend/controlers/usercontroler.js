@@ -23,19 +23,23 @@ const signup  = asynchandler(  async (req, res) =>  {
     throw new  CustomError("please add all fields" , 400 )
    }
 
-   const userexist = User.findOne({email})
+   const userexist = await User.findOne({email})
+   
    if(userexist) {
-    throw new  CustomError ("user already exist " , 400 )
+    throw new  CustomError ("user already exist" , 400 )
    }
   //  lets add this data to db 
    
-    const user = User.create({
+    const user = await User.create({
       name  ,  email, password
     })
-    const token = user.getJWTtoken()
+    console.log(user);
+    const token = await user.getJWTtoken()
+
+    console.log( "token here" , token);
   //  safety 
   user.password =undefined
-  res.cookies("token" , token  , cookieoptions)
+  res.cookie("token" , token  , cookieoptions)
 
  return  res.status(201).json({
     sucess  : true , 
@@ -60,16 +64,16 @@ const login  = asynchandler(async (req, res) => {
      throw new  CustomError("please provide all fields" , 500 )
     }
    
-  const user = user.findOne({email}).select("+password") 
+  const user =  await user.findOne({email}).select("+password") 
   if(!user) {
     throw new  CustomError("invalid craditionals" , 400)
   }
 
   const ispasswordmatched = user.comparepass(password)
   if(ispasswordmatched) {
-    const token = user.getJWTtoken()
+    const token =  await user.getJWTtoken()
      user.password = undefined , 
-     res.cookies('token' , token , cookieoptions) ;
+     res.cookie('token' , token , cookieoptions) ;
    return res.status(201).json({
       sucess  : true , 
       token , 

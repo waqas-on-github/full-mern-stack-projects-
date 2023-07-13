@@ -67,7 +67,7 @@ userschema.methods={
 } ,
 
     getJWTtoken : function () {
-        Jwt.sign({_id:this._id}  , process.env.SECRET  , { expiresin : '10d'})
+       return  Jwt.sign({_id:this._id}  , process.env.SECRET  , { expiresIn : '24h'})
     } ,
 
   generateforgotpasswordtoken : function () {

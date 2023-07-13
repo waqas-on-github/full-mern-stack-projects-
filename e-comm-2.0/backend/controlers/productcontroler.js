@@ -1,142 +1,56 @@
 import { Product } from "../models/product.schema.js.js"
+import multer from "multer"
+import cloudnaryconfig from "../config/cloudnaryconfig.js"
+import asynchandler from   '../services/asynchandler.js'
+import CustomError from '../utils/customError.js'
 
+const clodunairy = cloudnaryconfig()
 
-
-const  tesimg =  async(req, res ) => {
- await cloudinary.v2.uploader.upload("public/images/Screenshot from 2023-04-30 13-41-08.png",
-  { public_id: "olympic_flag" }, 
-  function(error, result) {console.log(result); });
-}
-
-
-
-
-async  function  createproduct (req, res) {
-    try{
-        const product = await Product.create(req.body) 
-        res.status(201).json({
-          sucess : true , 
-          product 
-        })
-      }
-     catch (error) {
-        res.json( {
-            error : error.message
-        })
-      }
-
-
-
-    }
-
- async  function allproducts (req, res ) {
-   
-   try {
-   const products  = await  Product.find() 
-   res.status(200).json({
-    sucess : true , 
-    products
-   })
-  
- } catch (error) {
-    res.status(400).json({
-      sucess : false , 
-      error  : error.message
-    })
-
- }
-
-}
-
-
-
-
-
-
-
-async function updateproduct (req, res ) {
-
-try {
-  
- const   product = await Product.findByIdAndUpdate(req.params.id , req.body , {new : true})
- 
- if(!product){
-  return res.status(404).json({
-     sucess : false , 
-     error :"product not found "
-   })   
+const storage = multer.diskStorage({
+  destination :  function (req, file , cb ) {
+    cb( null  , "uploads/")
   }
- 
-  res.status(200).json({
-    updated: true , 
-    product
-  })
+,
+  filename : function (req , file , cb ) {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9)
+    cb(null , file.fieldname + "-" + uniqueSuffix)
+
+  } 
+})
+
+const upload = multer({storage : storage })
 
 
-} catch (error) {
-  res.json({
-    updated : false , 
-    error : error.message 
-  })
-}
-
-}
 
 
-async  function deleteproduct (req, res) {
-  try {
-      
-   const  deleted  = await Product.findByIdAndDelete(req.params.id)
+/**********************************************************
+ * @ADD_PRODUCT
+ * @route https://localhost:5000/api/product
+ * @description Controller used for creating a new product
+ * @description Only admin can create the coupon
+ * @descriptio Uses AWS S3 Bucket for image upload
+ * @returns Product Object
+ *********************************************************/
 
-   res.status(200).json({
-    sucess : true , 
-    deletedproduct : deleted
-   })
+
+ const addproduct  = asynchandler (  async (req, res ) =>{
   
 
-  } catch (error) {
-     res.json({
-      sucess : false , 
-      error : error.message 
-     })
-  }
-}
+
+   const product = await Product.create(req.body)
+   if(!product) {
+     throw new CustomError("cant create data " , 400)
+   }
 
 
 
-async function getsingleproduct (req, res) {
- 
- try {
-   
- const product = await Product.findById(req.params.id) 
- if(!product){
- return res.status(404).json({
-    sucess : false , 
-    error :"product not found "
-  })   
- }
- res.status(200).json({
-  sucess : true , 
-  product
  })
+ 
 
- } catch (error) {
-  res.status(404).json({
-    sucess : false , 
-    error : error.message
-  })   
- }
-
-
-}
 
 
 export {
-    createproduct,
-    allproducts ,
-    getsingleproduct, 
-    updateproduct , 
-    deleteproduct , tesimg
+    addproduct
 }
 
 
