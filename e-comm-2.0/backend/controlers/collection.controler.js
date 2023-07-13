@@ -1,4 +1,4 @@
-import Collection from '../models/collection.schema.js'
+import {Collection} from '../models/collection.schema.js'
 import asynchandler from '../services/asynchandler.js'
 import CustomError from '../utils/customError.js'
 

@@ -34,14 +34,17 @@ const upload = multer({storage : storage })
 
 
  const addproduct  = asynchandler (  async (req, res ) =>{
-  
 
-
+    const    {name ,description ,price ,photos ,catagory} = req.body
+  console.log(req.body);
    const product = await Product.create(req.body)
    if(!product) {
-     throw new CustomError("cant create data " , 400)
+     throw new CustomError(" product can't be created by some reason" , 400)
    }
-
+   
+   res.json({
+    product
+   })
 
 
  })
@@ -49,8 +52,91 @@ const upload = multer({storage : storage })
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const  deleteall =   asynchandler( async(req  , res) => {
+  const deleted =  await Product.deleteMany({})
+   if(!deleted) {
+    throw new CustomError("can not delete items " , 400)
+   }
+
+   res.json({
+    deleted :  true  , 
+    deleted
+   })
+
+})
+
 export {
-    addproduct
+    addproduct, deleteall
 }
 
 

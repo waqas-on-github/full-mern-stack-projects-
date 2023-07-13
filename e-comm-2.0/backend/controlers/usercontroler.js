@@ -108,7 +108,18 @@ throw  new CustomError('wrong password' , 400)
 
 
   
+const  deleteallusers =   asynchandler( async(req  , res) => {
+  const deleted =  await User.deleteMany({})
+   if(!deleted) {
+    throw new CustomError("can not delete items " , 400)
+   }
 
+   res.json({
+    deleted :  true  , 
+    deleted
+   })
+
+})
 
 
 
@@ -117,5 +128,5 @@ throw  new CustomError('wrong password' , 400)
 export {
      signup ,
      login, 
-     logout
+     logout, deleteallusers
    }

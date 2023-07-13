@@ -25,20 +25,25 @@ import mongoose from "mongoose";
         default : 0
      }, 
 
-    photos : [{
+    photos :  {
+      
+     type :[{
 
        secure_url : {
             type : String,
             required : [true ,' images are requrired' ]
         } 
-    } ], 
+    } ] , 
+  
+   validate : {
+    validator :  function(photos) {
+      return photos.length >0 
+    }, 
+    message : " at least one photo is required"
+   }
+  
+  }, 
 
-
-    vendors  : [ {
-        required : [true , " we need vendor name "] ,
-        type :String
-    }]
-,
     catagory : {
         type: String , 
         required : [true , 'please enter product catagory']
@@ -59,7 +64,7 @@ import mongoose from "mongoose";
    
   collectionId : {
     ref  : "Collection" , 
-    type : mongoose.Schema.Types.ObjectId
+    type : mongoose.Schema.Types.ObjectId 
   },
 
    numberofReviews  : {
