@@ -6,6 +6,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import createError from 'http-errors'
 import logger from 'morgan'
+import { upload } from './services/multerservice.js'
 
 
 

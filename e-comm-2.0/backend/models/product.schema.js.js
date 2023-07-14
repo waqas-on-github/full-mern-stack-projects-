@@ -6,28 +6,29 @@ import mongoose from "mongoose";
         type : String , 
         required : [ true ,"product name is required"] ,  
         maxlength : [120  , " product name  should not be more then 120 chars "] ,
-        trim : true 
+        trim : true , 
+        unique : [true , "product name must be unique " ]
     },
 
-    description : {
-        type : String , 
-        required : [ true ,"product description  is required"] 
-    },  
+//     description : {
+//         type : String , 
+//         required : [ true ,"product description  is required"] 
+//     },  
 
-     price : {  
-        type : Number , 
-        required : [true , "product price is required"] , 
-        maxlength : [5 , "product price shoud note be more then 5 chars"]
-     } , 
+//      price : {  
+//         type : Number , 
+//         required : [true , "product price is required"] , 
+//         maxlength : [5 , "product price shoud note be more then 5 chars"]
+//      } , 
 
-     rating  : {
-        type : Number , 
-        default : 0
-     }, 
+//      rating  : {
+//         type : Number , 
+//         default : 0
+//      }, 
 
-    photos :  {
+photos :  {
       
-     type :[{
+      type :[{
 
        secure_url : {
             type : String,
@@ -38,58 +39,62 @@ import mongoose from "mongoose";
    validate : {
     validator :  function(photos) {
       return photos.length >0 
-    }, 
-    message : " at least one photo is required"
-   }
+     },      message : " at least one photo is required"
+    }
   
-  }, 
+   }, 
 
-    catagory : {
-        type: String , 
-        required : [true , 'please enter product catagory']
-    } , 
+//     catagory : {
+//         type: String , 
+//         required : [true , 'please enter product catagory']
+//     } , 
 
-    stock : {
-        type : Number , 
-        required : [true , "please enter product stock"],
-        maxlength : [4 , "stock can't exceed more the 4 characters"] ,
-        default : 0
-    },
-    sold : {
-      type : Number , 
-      required : [true , "please enter product stock"],
-      maxlength : [4 , "stock can't exceed more the 4 characters"] ,
-      default : 0
-  },
+//     stock : {
+//         type : Number , 
+//         required : [true , "please enter product stock"],
+//         maxlength : [4 , "stock can't exceed more the 4 characters"] ,
+//         default : 0
+//     },
+//     sold : {
+//       type : Number , 
+//       required : [true , "please enter product stock"],
+//       maxlength : [4 , "stock can't exceed more the 4 characters"] ,
+//       default : 0
+//   },
    
-  collectionId : {
-    ref  : "Collection" , 
-    type : mongoose.Schema.Types.ObjectId 
-  },
 
-   numberofReviews  : {
-    type :Number    , 
-    default : 0 
-   },
+//   collectionId :  {
+//     ref : "collection" , 
+//     type : mongoose.Schema.Types.ObjectId,
+//     required : [true , "collection id is required"]
+//   }
+  
+// ,
+  
 
-   reviews : [
-    { 
-      name : {
-        type : String , 
-        required :true
-      }, 
+// numberofReviews  : {
+//     type :Number    , 
+//     default : 0 
+//    },
+
+//    reviews : [
+//     { 
+//       name : {
+//         type : String , 
+//         required :true
+//       }, 
        
-      rating : {
-        type:  Number , 
-        required : true  
-      }, 
-      comment : {
-        type : String , 
-        required : true
-      }
+//       rating : {
+//         type:  Number , 
+//         required : true  
+//       }, 
+//       comment : {
+//         type : String , 
+//         required : true
+//       }
 
-     }
-   ]
+//      }
+//    ]
 
 
 

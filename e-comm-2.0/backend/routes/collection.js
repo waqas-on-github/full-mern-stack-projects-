@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createcollection } from "../controlers/collection.controler.js";
+import { createcollection , getAllCollections } from "../controlers/collection.controler.js";
 
 
  const router = Router()
@@ -11,7 +11,7 @@ router.get("/" , (req, res ) => {
 })
 
 router.post("/create" , createcollection) 
-
+router.get("/all" , getAllCollections )
 
 
 

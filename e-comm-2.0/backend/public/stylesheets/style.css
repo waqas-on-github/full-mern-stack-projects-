@@ -6,3 +6,12 @@ body {
 a {
   color: #00B7FF;
 }
+
+
+
+.canterpage  {
+  display: flex;
+  justify-items: center;
+  align-items: center;
+  flex-direction: column;
+}
