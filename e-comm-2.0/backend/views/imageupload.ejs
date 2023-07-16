@@ -8,12 +8,25 @@
 <body>
     
   <form  action="/api/v1/products/new" method="post" enctype="multipart/form-data" style=" background-color: azure; padding: 50px; display: flex; flex-direction: column; align-items: center;  justify-content: center; gap: 20px; " >
-    <input type="file" name="images" value="imagesuploading .." multiple>
     
     <label for="name">Name:</label>
     <input type="text" id="name" name="name">
-  
-  
+    
+    <label for="description">description</label>
+    <input type="text" id="description" name="description">
+    
+    <label for="price"  > price</label>
+    <input type="text" id="price"  name ="price"> 
+
+    <label for="images"> upload images</label>
+    <input type="file" name="images" value="imagesuploading .." multiple>
+    
+    <label for="catagory">catagory</label>
+    <input type="text" id="catagory" name="catagory">
+
+     <label for="collection"> collection id </label>
+     <input type="text" name="collectionId" id="collectionId">
+    
     <button type="submit">Upload</button>
   </form>
   

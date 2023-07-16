@@ -12,7 +12,7 @@ const collectionschema  = mongoose.Schema({
 })
 
 
-const Collection = mongoose.model("Collection" , collectionschema)
+const Collection = mongoose.model(" " , collectionschema)
 
 export {
     Collection

@@ -68,10 +68,11 @@ const deleteimage  = async (id) => {
     return error  
    }
 
-
-
-
 }
+
+
+
+
   
 export {uploadImage , deleteimage , uploadmultiple}
 

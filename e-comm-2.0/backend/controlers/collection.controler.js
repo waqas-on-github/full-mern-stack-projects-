@@ -55,10 +55,16 @@ const updatecollection  = asynchandler(async (req, res) => {
     if (!collectionToDelete) {
       throw new CustomError("Collection not found", 404);
     }
-  
-    collectionToDelete.remove();
+    
+      const deleted  = await Collection.findByIdAndDelete(collectionId)
+      if(!deleted) {
+        throw new CustomError("coanot delete collection" , 401)
+      }
+
+
     res.status(200).json({
       success: true,
+      deleted , 
       message: "Collection has been deleted successfully",
     });
   });
@@ -82,6 +88,17 @@ const updatecollection  = asynchandler(async (req, res) => {
 
 
 
+  const destroyall  = asynchandler(async(req, res) => {
+    const destroyed = await Collection.deleteMany() 
+    if(!destroyed) { throw new CustomError("cant be  deleted " , 400)} 
+    res.json({
+      dleteted : true ,  
+      destroyed
+    })
+  } )
+
+
+
 
 
 
@@ -99,5 +116,5 @@ export {
     createcollection
     , updatecollection
     ,deleteCollection,
-    getAllCollections
+    getAllCollections , destroyall
 }

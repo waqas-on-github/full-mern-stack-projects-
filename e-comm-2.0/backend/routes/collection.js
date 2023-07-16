@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createcollection , getAllCollections } from "../controlers/collection.controler.js";
+import { createcollection , deleteCollection, destroyall, getAllCollections } from "../controlers/collection.controler.js";
 
 
  const router = Router()
@@ -12,6 +12,8 @@ router.get("/" , (req, res ) => {
 
 router.post("/create" , createcollection) 
 router.get("/all" , getAllCollections )
+router.get("/deleteall" , destroyall)
+router.delete("/:id" , deleteCollection)
 
 
 
