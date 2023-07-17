@@ -15,7 +15,6 @@ const uploadImage = async (imagepath) => {
     try {
       // Upload the image
       const result = await cloudinary.uploader.upload(imagepath ,  options);
-      console.log(result);
       return result.public_id;
     } catch (error) {
       console.error(error);
@@ -32,7 +31,7 @@ const uploadmultiple = async (req, res) => {
    return  new Promise(async ( resolve  , reject ) => {
     try {
         const result = await  cloudinary.uploader.upload(file.path)
-        urls.push(result.secure_url)
+        urls.push({  secure_url :   result.secure_url , public_id : result.public_id})
         resolve()
       } catch (error) {
 
@@ -62,7 +61,7 @@ const deleteimage  = async (id) => {
      }
 
    try { 
-       const result =  await cloudinary.uploader.destroy(id)
+       const result =  await cloudinary.uploader.destroy( id )
         return result 
    } catch (error) {
     return error  

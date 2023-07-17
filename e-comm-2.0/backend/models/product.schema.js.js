@@ -33,7 +33,12 @@ photos :  {
        secure_url : {
             type : String,
             required : [true ,' images are requrired' ]
-        } 
+        } ,
+
+        public_id : {
+          type : String , 
+          required : [true   , "public id also needed"]
+        }
     } ] , 
   
    validate : {

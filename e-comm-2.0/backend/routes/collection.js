@@ -12,7 +12,7 @@ router.get("/" , (req, res ) => {
 
 router.post("/create" , createcollection) 
 router.get("/all" , getAllCollections )
-router.get("/deleteall" , destroyall)
+router.delete("/deleteall" , destroyall)
 router.delete("/:id" , deleteCollection)
 
 

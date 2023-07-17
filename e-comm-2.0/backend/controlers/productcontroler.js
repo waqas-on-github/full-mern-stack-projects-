@@ -2,8 +2,7 @@ import { Product } from "../models/product.schema.js.js"
 import asynchandler from   '../services/asynchandler.js'
 import {    uploadmultiple} from "../services/uploadservice.js"
 import CustomError from '../utils/customError.js'
-import { Collection } from "../models/collection.schema.js"
-import {log} from 'console'
+import {error, log} from 'console'  
 
 
 /**********************************************************
@@ -45,12 +44,12 @@ import {log} from 'console'
 
    const result =   await uploadmultiple(req,res)
    
-    
+    console.log(result);
       
 
    const product = new Product({
     name ,  description  ,price , catagory, collectionId,
-    photos : result.map((photo) => ({ secure_url : photo }))   })
+    photos : result.map((photo) => ({ secure_url : photo.secure_url , public_id :photo.public_id}))   })
 
 
       
@@ -70,16 +69,9 @@ import {log} from 'console'
     })
  
 
-
-
 const productroute = asynchandler( async( req, res ) => {
   res.render('imageupload')
 } )
-
-
-
-
-
 
 
   const findByCollection = asynchandler( async (req, res ) => {
@@ -93,9 +85,6 @@ const productroute = asynchandler( async( req, res ) => {
 
 
 })
-
-
-
 
 const  deleteall =   asynchandler( async(req  , res) => {
   const deleted =  await Product.deleteMany({})
@@ -111,7 +100,8 @@ const  deleteall =   asynchandler( async(req  , res) => {
 })
 
 
-const deleteproduct = asynchandler(async(req, res ) => {
+const 
+deleteproduct = asynchandler(async(req, res ) => {
   const collectionId  = req.params.id 
   // what things ive to delete 
   // 1 db recode whole product + images secure urls
@@ -121,35 +111,67 @@ const deleteproduct = asynchandler(async(req, res ) => {
   
   // get product first 
   const product = await  Product.findById(collectionId)
-
+    console.log(product);
   // get urls from db and store them in array 
     const urls =[]
     product.photos.forEach((photo) => {
       const url = photo.secure_url
-      urls.push(url)
-     
+      urls.push(url) 
+      
     })
+    console.log(urls);
 
 
 
     // delete photos from cloudnairy 
 
-    const deletephtots = urls.map((url) => {
-    
-
-    })
 
 
-   res.json({
-    product , urls
-   })
+  })
 
 
+
+
+const getAllProducts = asynchandler(async(req,res) => 
+{
+
+  const products = await Product.find() 
+  if(!products) {
+    throw new   CustomError("cabn not find products " , 400) 
+  }
+
+
+ res.json({
+  sucess : true , 
+  products
+ })
 
 })
 
+const getOneProduct  = asynchandler(async(req, res) => {
+  const id = req.params.id 
+  
+  const singleProduct = await Product.findById(id) 
+  if(!singleProduct) {
+    throw new CustomError("can not find any product accosiated to  this " + id , 400  )
+  }
+  
+  res.json ({
+    sucess : true  ,  
+    singleProduct
+  })
+
+})
+
+
 export {
-    addproduct, deleteall , productroute ,findByCollection , deleteproduct
+    addproduct,
+     deleteall ,
+      productroute ,
+      findByCollection ,
+       deleteproduct ,
+        getAllProducts, 
+        getOneProduct
 }
 
 
