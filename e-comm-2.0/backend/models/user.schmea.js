@@ -63,7 +63,7 @@ userschema.pre ( "save" , async function (next) {
 
 userschema.methods={
     comparepass : async function(pass) {
-    return await bcrypt.compare(  pass ,  this.password )
+    return await bcrypt.compare(pass ,  this.password )
 } ,
 
     getJWTtoken : function () {

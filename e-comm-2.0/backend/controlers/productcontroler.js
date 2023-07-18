@@ -1,9 +1,10 @@
-import { Product } from "../models/product.schema.js.js"
+  import { Product } from "../models/product.schema.js.js"
 import asynchandler from   '../services/asynchandler.js'
-import {    uploadmultiple} from "../services/uploadservice.js"
+import {    deleteimage, uploadmultiple} from "../services/uploadservice.js"
 import CustomError from '../utils/customError.js'
 import {error, log} from 'console'  
-
+import cloudnaryconfig from "../config/cloudnaryconfig.js"
+const cloudinary = cloudnaryconfig()
 
 /**********************************************************
  * @ADD_PRODUCT
@@ -15,7 +16,7 @@ import {error, log} from 'console'
  *********************************************************/
 
 
- const addproduct  = asynchandler(  async (req, res ) =>{
+const addproduct  = asynchandler(  async (req, res ) =>{
   const urls = []
   const files = req.files
   
@@ -28,7 +29,6 @@ import {error, log} from 'console'
 
 
 
-     console.log(req.body);
        if (  !name   ||!description   ||!price   ||!catagory   ||!collectionId)
    {
   throw new CustomError("please fill all fields" , 400)
@@ -44,7 +44,6 @@ import {error, log} from 'console'
 
    const result =   await uploadmultiple(req,res)
    
-    console.log(result);
       
 
    const product = new Product({
@@ -66,17 +65,14 @@ import {error, log} from 'console'
 
 
 
-    })
+})
  
-
 const productroute = asynchandler( async( req, res ) => {
   res.render('imageupload')
-} )
+})
 
-
-  const findByCollection = asynchandler( async (req, res ) => {
+const findByCollection = asynchandler( async (req, res ) => {
    const collectionID = req.params.id 
-    log(collectionID)
     const  products = await  Product.find({collectionId:collectionID})    
     // cna list collections here  
     res.json({
@@ -99,38 +95,51 @@ const  deleteall =   asynchandler( async(req  , res) => {
 
 })
 
+const deleteproduct = asynchandler(async (req, res) => {
+  const Id = req.params.id;
+  let deletedresult = [];
 
-const 
-deleteproduct = asynchandler(async(req, res ) => {
-  const collectionId  = req.params.id 
-  // what things ive to delete 
-  // 1 db recode whole product + images secure urls
-  // images array from cloudniary 
+  try {
+    // Get product first
+    const product = await Product.findById(Id);
+    if(!product) {
+      throw new CustomError("product not found " , 400)
+    }
 
-  
-  
-  // get product first 
-  const product = await  Product.findById(collectionId)
-    console.log(product);
-  // get urls from db and store them in array 
-    const urls =[]
-    product.photos.forEach((photo) => {
-      const url = photo.secure_url
-      urls.push(url) 
-      
-    })
-    console.log(urls);
+    // Get URLs from db and store them in an array
+    const clids = product.photos.map((photo) => photo.public_id);
 
+    // Delete photos from Cloudinary
+    const deleteimages = clids.map((clid) => {
+      return new Promise(async (resolve, reject) => {
+        try {
+          const result = await cloudinary.uploader.destroy(clid);
+          resolve(result);
+        } catch (error) {
+          reject(error);
+        }
+      });
+    });
 
+    // Wait for all image deletions to complete
+    const deletedImages = await Promise.all(deleteimages);
+    deletedresult.push(deletedImages);
 
-    // delete photos from cloudnairy 
+    // Delete the product from the database
+    const deletedProduct = await Product.findByIdAndDelete(Id);
+    if (!deletedProduct) {
+      throw new CustomError("Product could not be deleted from the database", 400);
+    }
 
-
-
-  })
-
-
-
+    res.json({
+      deleted: true,
+      deletedresult,
+      deletedProduct,
+    });
+  } catch (error) {
+    throw new CustomError("Failed to delete product", 400);
+  }
+})
 
 const getAllProducts = asynchandler(async(req,res) => 
 {
@@ -164,14 +173,16 @@ const getOneProduct  = asynchandler(async(req, res) => {
 })
 
 
+
+
 export {
     addproduct,
-     deleteall ,
-      productroute ,
-      findByCollection ,
-       deleteproduct ,
-        getAllProducts, 
-        getOneProduct
+    deleteall ,
+    productroute ,
+    findByCollection ,
+    getAllProducts, 
+    deleteproduct ,
+    getOneProduct
 }
 
 

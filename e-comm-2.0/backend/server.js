@@ -6,8 +6,7 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import createError from 'http-errors'
 import logger from 'morgan'
-import { upload } from './services/multerservice.js'
-
+import cookieParser from 'cookie-parser'
 
 
 
@@ -36,6 +35,7 @@ app.use(
     path.join(path.dirname(fileURLToPath(import.meta.url)), 'public')
   )
 )
+app.use(cookieParser())
 
 // mount imported routes
 app.use('/', indexRouter)

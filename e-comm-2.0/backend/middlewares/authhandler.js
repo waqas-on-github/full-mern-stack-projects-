@@ -1,52 +1,37 @@
-import { User } from "../models/user.schmea.js";
-import Jwt  from "jsonwebtoken";
-import asynchandler from "../services/asynchandler.js";
 import CustomError from "../utils/customError.js";
+import asynchandler from "../services/asynchandler.js";
+import JWT from "jsonwebtoken";
+import { User } from "../models/user.schmea.js";
 
 
-const isloggedin  = asynchandler ( async (req, res , next ) => {
+export const isLoggedIn = asynchandler(async (req, res, next) => {
+    let token;
 
-let token ;
-if(res.cookies.token || (res.headers.authorization && res.headers.authorization.startswith("Bearer") ))
-{
-    token = res.cookies.token || res.headers.authorization.split(" ")[1]
-   
-}
+    if (req.cookies.token || (req.headers.authorization && req.headers.authorization.startsWith("Bearer")) ) {
+        token = req.cookies.token || req.headers.authorization.split(" ")[1]
+        
+        // token = "Bearer gbhnjm235r5hbnj"
+    }
 
-if (!token) {
-    throw new CustomError("Not authorized to access this resource", 401)
-}
+    if (!token) {
+        throw new CustomError("Not authorized to access this resource", 401)
+    }
 
-try {
-     const decodejwtpayload = Jwt.verify(token , process.env.SECRET)
-     req.user = await User.findById(decodejwtpayload._id , "name email role" )
-     next()
-} catch (error) {
-    throw new CustomError("Not authorized to access this resource", 401)
-}
+    try {
+        const decodedJwtPayload = JWT.verify(token, process.env.SECRET);
 
-    next()
-} )
+         req.user = await User.findById(decodedJwtPayload._id, "name email role")
+         next()
+    } catch (error) {
+        throw new CustomError("Not authorized to access this resource", 401)
+    }
+    
+})
 
-const authorize = (...requiredRoles) => asynchandler( async (req, res, next) => {
+
+export const authorize = (...requiredRoles) => asynchandler( async (req, res, next) => {
     if (!requiredRoles.includes(req.user.role)) {
         throw new CustomError("You are not authorized to access this resource")
     }
     next()
 })
-
-
-
-
-
-
-
-
-
-
-
-
-
-export {
-    isloggedin,authorize
-}

@@ -55,13 +55,13 @@ const uploadmultiple = async (req, res) => {
 
 
 
-const deleteimage  = async (id) => {
+const deleteimage  = async (ids) => {
      const options =  {
       overwrite : true 
      }
 
    try { 
-       const result =  await cloudinary.uploader.destroy( id )
+       const result =  await cloudinary.uploader.destroy( ids )
         return result 
    } catch (error) {
     return error  
