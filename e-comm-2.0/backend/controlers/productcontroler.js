@@ -1,8 +1,7 @@
-  import { Product } from "../models/product.schema.js.js"
+import { Product } from "../models/product.schema.js.js"
 import asynchandler from   '../services/asynchandler.js'
-import {    deleteimage, uploadmultiple} from "../services/uploadservice.js"
+import {  uploadmultiple} from "../services/uploadservice.js"
 import CustomError from '../utils/customError.js'
-import {error, log} from 'console'  
 import cloudnaryconfig from "../config/cloudnaryconfig.js"
 const cloudinary = cloudnaryconfig()
 
@@ -17,6 +16,7 @@ const cloudinary = cloudnaryconfig()
 
 
 const addproduct  = asynchandler(  async (req, res ) =>{
+  console.log(req.user);
   const urls = []
   const files = req.files
   

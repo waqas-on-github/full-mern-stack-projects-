@@ -17,21 +17,39 @@ export const isLoggedIn = asynchandler(async (req, res, next) => {
         throw new CustomError("Not authorized to access this resource", 401)
     }
 
-    try {
+    
         const decodedJwtPayload = JWT.verify(token, process.env.SECRET);
 
          req.user = await User.findById(decodedJwtPayload._id, "name email role")
          next()
-    } catch (error) {
-        throw new CustomError("Not authorized to access this resource", 401)
-    }
+        if(!req.user) {
+
+            throw new CustomError("Not authorized to access this resource", 401)
+        }
+    
+
     
 })
 
 
-export const authorize = (...requiredRoles) => asynchandler( async (req, res, next) => {
-    if (!requiredRoles.includes(req.user.role)) {
-        throw new CustomError("You are not authorized to access this resource")
+// Define the authorize function
+export const authorize = (...requiredRoles) => {
+    return  function (req, res, next) {
+      
+        // Check if the user's role is included in the list of required roles
+        if (!req.user || !requiredRoles.includes(req.user.role)) {
+          // If req.user is undefined or the user's role is not in the required roles, throw an error
+
+         return res.json({
+           sucess : false ,
+           error : ` ${req?.user?.role} are not allowed to access this resource`
+          }
+          )}
+
+        // If the user's role is in the required roles, proceed to the next middleware/route handler
+        
+        next();
     }
-    next()
-})
+    };
+
+      
