@@ -13,10 +13,10 @@ router.get("/" , (req, res ) => {
 
 router.post("/create"  , isLoggedIn , authorize("ADMIN" , "MODERATOR")   , createcollection) 
 router.get("/all" ,  isLoggedIn , authorize("ADMIN" , "MODERATOR") ,  getAllCollections )
-router.delete("/deleteall" ,authorize("ADMIN" )  ,   destroyall)
-router.delete("/:id" , deleteCollection)
+router.delete("/:id" , isLoggedIn , authorize("ADMIN" , "MODERATOR")   ,  deleteCollection)
 
-
+// ONLY ADMIN 
+router.delete("/deleteall" , isLoggedIn , authorize("ADMIN" )  ,   destroyall)
 
 export {
     router

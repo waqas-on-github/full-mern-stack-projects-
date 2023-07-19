@@ -16,7 +16,8 @@ import { router as indexRouter } from './routes/index.js'
 import { router as usersRouter } from './routes/users.js'
 import { router as productrouter } from './routes/product.js'
 import { router as collectionrouter} from './routes/collection.js'
-
+import {router as couponrouter } from './routes/coupen.route.js' 
+ 
 
 
 
@@ -42,6 +43,7 @@ app.use('/', indexRouter)
 app.use('/api/v1/users', usersRouter)
 app.use('/api/v1' , productrouter)
 app.use('/api/v1/collections' , collectionrouter)
+app.use('/api/v1/coupon' , couponrouter)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404))

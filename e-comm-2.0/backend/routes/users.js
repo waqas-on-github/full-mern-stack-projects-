@@ -5,16 +5,21 @@ import { authorize, isLoggedIn  ,  } from '../middlewares/authhandler.js'
 
 // post localhost:3000/users/new
 router.post('/new',  signup )
-router.post('/login' , login) 
-router.get('/logout' , logout) 
-router.get("/profile"  , isLoggedIn ,      getprofile)
+router.post('/login' , login)
+
+
+
+router.get('/logout' ,  isLoggedIn , logout) 
+router.get("/profile"  , isLoggedIn ,    getprofile)
+
+
+
+// ONLY ADMIN ROUTES 
 router.get("/all",isLoggedIn ,  authorize( "ADMIN")  ,  getAllusers)
+router.delete('/delete', isLoggedIn , authorize("ADMIN") ,    deleteallusers)
 
 
 
-
-
-router.delete('/delete',    deleteallusers)
 
 export { router }
 
