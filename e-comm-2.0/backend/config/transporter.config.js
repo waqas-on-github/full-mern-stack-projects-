@@ -1,20 +1,41 @@
+// import nodemailer from "nodemailer";
+
+
+// // transporter.config.js
+
+// const transporter = nodemailer.createTransport({
+//   host: process.env.mail_Host,
+//   port: parseInt(process.env.mail_Port),
+//   secure: false, // Set to false when using STARTTLS
+//   auth: {
+//     user: process.env.mail_Username,
+//     pass: process.env.mail_Password,
+//   },
+// });
 
 import nodemailer from "nodemailer";
 
-
-const  transporter = nodemailer.createTransport({
-    host:process.env.mail_Host , 
-    port: process.env.mail_Port , 
-    secure: true,
-    auth: {
-      // TODO: replace `user` and `pass` values from <https://forwardemail.net>
-      user: process.env.mail_Username , 
-      pass:process.env.mail_Sender
-    }
-  });
+// const transporter = nodemailer.createTransport({
+//   host: "sandbox.smtp.mailtrap.io",
+//   port: 587, // Use port 587 for STARTTLS
+//   secure: false, // Set to false when using STARTTLS
+//   auth: {
+//     user: "4e959f6abc4066",
+//     pass: "51b1ea7456093d",
+//   },
+// });
 
 
-
-  export {
-    transporter
+const transporter = nodemailer.createTransport({
+  host: 'smtp.ethereal.email',
+  port: 587,
+  auth: {
+      user: 'terrill9@ethereal.email',
+      pass: 'TeBVGMZ6hRQQ8KCnUc'
   }
+});
+
+
+
+
+export { transporter };

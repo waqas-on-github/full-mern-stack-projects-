@@ -16,7 +16,7 @@ const userschema = mongoose.Schema (
          email :{ 
             type : String , 
             required : [true , "email is required"]
-            ,uniuqe : [true , "email must be uniuqe" ]
+            ,unique : [true , "email must be uniuqe" ]
          } , 
          password  : {
             type : String , 
@@ -33,15 +33,9 @@ const userschema = mongoose.Schema (
         frogotPasswordToken : String , 
         frogotPasswordExpairy : Date 
 
-
-
-
-
-
     } , 
     {timestamps : true}
 )
-
 
 userschema.pre ( "save" , async function (next) {
     if(!this.isModified('password')){
@@ -56,26 +50,24 @@ userschema.pre ( "save" , async function (next) {
     
   }
 
-
-
-
 }) ; 
 
 userschema.methods={
     comparepass : async function(pass) {
     return await bcrypt.compare(pass ,  this.password )
-} ,
+                                        } ,
 
     getJWTtoken : function () {
        return  Jwt.sign({_id:this._id}  , process.env.SECRET  , { expiresIn : '24h'})
-    } ,
+                              },
 
   generateforgotpasswordtoken : function () {
 
      // generate token 
-     const forgotToken = crypto.randombytes(20).tostring('hex') 
+    const forgotToken = crypto.randomBytes(20).toString('hex') 
     // encrypt generated toke by crypto 
-    this.frogotPasswordToken = crypto .createHash("sha256").update(forgotToken).digest('hex')
+     this.frogotPasswordToken = crypto.createHash("sha256").update(forgotToken).digest('hex')
+    // this.frogotPasswordToken= forgotToken 
     // time for token to expire 
     this.frogotPasswordExpairy = Date.now()  + 20 * 60 * 1000
    

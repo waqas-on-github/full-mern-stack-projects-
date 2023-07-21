@@ -1,4 +1,4 @@
-import transporter from '../config/transporter.config.js'
+import {transporter} from '../config/transporter.config.js'
 
 const mailHelper = async (option ) =>  {
 
@@ -6,7 +6,7 @@ const mailHelper = async (option ) =>  {
     from : process.env.mail_Sender , 
     to : option.email , 
     subject :  option.subject , 
-    text : option .text
+    text: option.text
 
    }
 
