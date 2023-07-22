@@ -69,12 +69,14 @@ const login  = asynchandler(async (req, res) => {
      throw new  CustomError("please provide all fields" , 500 )
     }
    
-  const user =  await User.findOne({email}).select("+password") 
+  const user =  await User.findOne({email , password}).select("+password") 
   if(!user) {
     throw new  CustomError("invalid craditionals" , 400)
   }
 
-  const ispasswordmatched = user.comparepass(password)
+  const ispasswordmatched = await  user.comparepass(password)
+
+
   if(ispasswordmatched) {
     const token =  await user.getJWTtoken()
      user.password = undefined , 
@@ -85,6 +87,8 @@ const login  = asynchandler(async (req, res) => {
       user
      })
   }
+
+
 throw  new CustomError('wrong password' , 400)
    
 
@@ -213,9 +217,8 @@ res.json({
 
 })
 
-
 const resetpassword = asynchandler(async (req, res ) => {
-   // get token from weve send throught email url 
+// get token from weve send throught email url 
   const token = req.params.id 
   const {password , confirmpassword } = req.body 
 
@@ -224,7 +227,7 @@ const resetpassword = asynchandler(async (req, res ) => {
  
 
   const user = await User.findOne({ frogotPasswordToken:reset_token})
-
+  console.log(user);
 
 if (!user) {
     throw new CustomError( "password reset token in invalid or expired", 400)
@@ -234,12 +237,13 @@ if (password !== confirmpassword) {
     throw new CustomError("password does not match", 400)
 }
 
-user.password = password;
 
-user.forgotPasswordToken = undefined
-user.forgotPasswordExpiry = undefined
+user.password = password,
+user.frogotPasswordToken = undefined,
+user.frogotPasswordExpairy = undefined
 
-await user.save()
+ const  result = await user.save()
+ console.log(result);
 
 // optional
 
@@ -253,13 +257,19 @@ res.status(200).json({
 
 })
 
+
+// todo later some time 
+const updateuser = asynchandler(async(req, res) => {
+  res.send("updating .... ")
+})
 export {
      signup ,
      login, 
      logout,
      deleteallusers , 
      getprofile , 
-     getAllusers , 
+     getAllusers ,
+     updateuser , 
      forgotPasswoed , 
      resetpassword
    }

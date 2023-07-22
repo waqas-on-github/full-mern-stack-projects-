@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import CustomError from "../utils/customError.js";
+import asynchandler from "../services/asynchandler.js";
 mongoose.set('strictQuery' ,false)
 const db = mongoose.connection
 
@@ -9,10 +11,12 @@ const db = mongoose.connection
 })
 
 
-db.on("error", (err) => {
-    console.error("Database connection error:", err);
-    // Perform appropriate error handling (e.g., retry logic, exit the application)
-  });
+  db.on("error",   (err , req, res, next) => {
+      console.error("Database connection error:", err);
+    // Emit a custom event "databaseError" with the error object
+  process.emit("databaseError", new CustomError(err.message, 500));
+    
+  })
 
   // Handle graceful shutdown
 process.on("SIGINT", async () => {

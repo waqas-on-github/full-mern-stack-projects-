@@ -8,7 +8,7 @@ import createError from 'http-errors'
 import logger from 'morgan'
 import cookieParser from 'cookie-parser'
 
-
+//03
 
 
 // import routers
@@ -17,6 +17,7 @@ import { router as usersRouter } from './routes/users.js'
 import { router as productrouter } from './routes/product.js'
 import { router as collectionrouter} from './routes/collection.js'
 import {router as couponrouter } from './routes/coupen.route.js' 
+import {router as  orderrouter  } from './routes/order.route.js'
  
 
 
@@ -43,13 +44,14 @@ app.use('/', indexRouter)
 app.use('/api/v1/users', usersRouter)
 app.use('/api/v1' , productrouter)
 app.use('/api/v1/collections' , collectionrouter)
-app.use('/api/v1/coupon' , couponrouter)
+app.use('/api/v1/coupon' , couponrouter) 
+app.use('/api/v1/orders' , orderrouter)
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
   next(createError(404))
 })
 
-// error handler
+// error handler middleware rs
 app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message
@@ -57,7 +59,19 @@ app.use(function (err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500)
-  res.render('error')
+
+  res.json({
+    error : err
+  })
+
+
+
+  process.on("databaseError", (err) => {
+    // Pass the custom error to the error handling middleware
+    app.emit("error", err);
+    console.log( " error fro emmiter  " + err);
+    
+  });
 })
 
 export { app }
