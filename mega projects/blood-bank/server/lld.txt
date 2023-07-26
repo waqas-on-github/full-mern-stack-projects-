@@ -1,0 +1,36 @@
+High-Level Design (HLD) for Blood Bank Web Application:
+
+Client-side:
+
+The client interacts with the web application through a web browser.
+The UI is designed using HTML, CSS, and JavaScript to provide a user-friendly interface.
+Server-side:
+
+The server is built using Node.js and Express to handle HTTP requests and responses.
+The application is connected to the MongoDB database to store and retrieve data.
+MongoDB stores user details, donor information, hospital details, and blood bank inventory.
+Authentication and Authorization:
+
+User authentication is implemented using JWT (JSON Web Tokens) for secure login sessions.
+The server verifies the JWT for each request to ensure authorized access to specific functionalities.
+Donor Module:
+
+Donors can register, log in, and provide their information through the web application.
+Donors can update their availability status and last donation date.
+Hospitals can search for donors based on blood group and location to request blood donations.
+Hospital Module:
+
+Hospitals can register, log in, and update their blood bank information through the web application.
+Hospitals can post their blood bank information, including available blood groups and quantities.
+Hospitals can search for donors based on blood group and location to request blood donations.
+Blood Bank Search and Matching:
+
+When a hospital searches for donors, the server queries the database to find suitable donors matching the requested blood group and location.
+The server then returns the list of available donors to the hospital.
+Middleware and Error Handling:
+
+Middleware functions handle various aspects such as authentication, database connections, and request/response formatting.
+Error handling mechanisms ensure graceful handling of exceptions and errors, providing appropriate feedback to users.
+Deployment:
+
+The web application is deployed on a server with a domain name, allowing users to access it from any location.
