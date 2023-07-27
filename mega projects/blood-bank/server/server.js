@@ -1,4 +1,6 @@
 // import npm packages
+import 'dotenv/config.js'
+import './config/db.js'
 import express from 'express'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -7,9 +9,8 @@ import logger from 'morgan'
 
 // import routers
 import { router as indexRouter } from './routes/index.js'
-import { router as usersRouter } from './routes/users.js'
-import { CustomError } from './serves/customerror.js'
-
+import { router as donerRouter } from './routes/doner.route.js'
+import { CustomError } from './services/customerror.js'
 // create the express app
 const app = express()
 
@@ -26,31 +27,43 @@ app.use(
 
 // mount imported routes
 app.use('/', indexRouter)
-app.use('/users', usersRouter)
+app.use('/doner', donerRouter)
 
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404))
-})
+
+// error handler middleware 
+// error handler middleware 
 
 // error handler middleware 
 app.use(function (err, req, res, next) {
-  if(err instanceof CustomError) {
+  if (err instanceof CustomError) {
+    console.log("Custom error occurred");
     res.status(err.code || 500).json({
-      sucess : false , 
-      err : err
-    })
+      success: false,
+      error: {
+        message: err.message,
+        code: err.code,
+        cause: err.cause
+      }
+    });
+  } else {
+    console.error('Error occurred');
+    console.log("From middleware");
+  
+    res.status(err.code || 500).json({
+      success: false,
+      error: {
+        message: err.message
+      }
+    });
+  }
+});
 
-    console.error(`custom error occered due to ${err.cause}` ,  err)
-  } 
 
-console.error('error occered ');
-res.status(err.code || 500).json({
-  sucess : false , 
-  err : err
+// catch 404 and forward to error handler
+app.use(function (req, res, next) {
+res.json({
+  message :  "404 route not found "
 })
-  // render the error page
- 
 })
 
 export { app }

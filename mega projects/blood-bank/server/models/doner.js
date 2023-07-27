@@ -1,11 +1,12 @@
 import mongoose from "mongoose";
-import { BloodReq } from "./bloodrequirements";
+import { bloodreqSchema } from "./bloodrequirements.js";
 // genral user schema fields needed  
 // name , email password , forgotpass , resetpass for now .. 
 
-const donerchema = mongoose.Schema({
+const donerchema =  mongoose.Schema({
 name : {
- type :String , required : [ true , "doner name is required"] 
+ type :String , 
+ required : [ true , "doner name is required"] 
 },
 email : {
     type :String , required : [ true , "email is required"] 
@@ -22,7 +23,12 @@ select : false
 
 forgotpass :String , 
 resetpass : String , 
-requirments :BloodReq
+requirments : {
+    
+type : bloodreqSchema ,  
+required : true     
+
+}
 
 
 })

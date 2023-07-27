@@ -1,15 +1,18 @@
 import mongoose from  'mongoose'
 
 
-const bloodreqSchema = new mongoose.Schema({
+const bloodreqSchema =  mongoose.Schema({
 
   age :{
     type : Number , 
-    min :18 , max: 65
+    min :18 , max: 65 , 
+    required :true 
   }, 
 
   bloodgroup : {
     type    : String
+    ,required :true 
+
   } , 
   dateOfBirth: {
     type: Date,
@@ -25,7 +28,12 @@ const bloodreqSchema = new mongoose.Schema({
     required: true,
   }, 
   vaccinationStatus : {
-    covid: Boolean 
+    
+    covid:{
+     type : Boolean 
+    ,required :true
+   }
+    
   }, 
 
   isDeferred: {
@@ -53,7 +61,8 @@ const bloodreqSchema = new mongoose.Schema({
 });
 
 
-const BloodReq = mongoose.model("BloodReq" , bloodreqSchema)
+// const BloodReq = mongoose.model("BloodReq" , bloodreqSchema)  // when we write schema for embedding we dont need to make model from it 
+
 export{
-    BloodReq
+    bloodreqSchema
 }
