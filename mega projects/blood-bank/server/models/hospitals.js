@@ -1,40 +1,101 @@
 import mongoose  from "mongoose";
 
 
-const hospitaleschema = new mongoose.Schema ({
+const hospitaleschema =  mongoose.Schema ({
      
 // we will add hero image  location and more feilds late this is "MVP" so keep it simple 
-  name: {
+  Hospitalname: {
     type: String,
     required: true,
   },
 
   address: {
-    street: String,
-    city: String,
-    state: String,
-    postalCode: String,
-    country: String,
-    required : [true, 'hospital address required'] 
+        street:
+        {  type: String,
+           required :true
+        },
+
+        city: 
+        { type: String ,
+           required :true
+        },
+
+        state:
+        {  type: String,
+           required :true
+        },
+
+        postalCode:
+        {  type: String,
+           required :true
+        },
+        
+        country:
+        {  type: String,
+           required :true
+        },
   },
   contactPerson: {
-    name: String,
-    role: String,
-    email: String,
-    phone: String,
-    required : [true, 'hospital contact person details  required'] 
+         name:  
+         {  type : String ,
+              required :true
+         },
+         role:  
+         {  type : String ,
+              required :true
+         },
+         email: 
+         {   type : String ,
+              required :true
+         },
+         phone: 
+         {   type : String ,
+              required :true
+         },
 
     
   },
   bloodRequirements: {
     // You can define a separate schema for blood requirements if needed
-    groups: [{ type: String }], // Blood groups required (e.g., ['A', 'B', 'AB', 'O'])
-    rhFactors: [{ type: String }], // Rh factors required (e.g., ['Positive', 'Negative'])
-    quantity: Number, // Preferred blood quantity in units
-    urgency: String, // Urgency level (e.g., 'Urgent', 'Routine')
-    usagePurpose: String, // Purpose of blood usage (e.g., 'Surgeries', 'Emergency')
-    requiredDocumentation: String, // Any required documentation for blood collection
+    groups:{ 
+      type : [
+        
+        {
+           type: String  , 
+           required : true  
+        }
+      
+      ]
+
+    
+    }, // Blood groups required (e.g., ['A', 'B', 'AB', 'O'])
+    rhFactors: [{ type: String , required : true  }], // Rh factors required (e.g., ['Positive', 'Negative'])
+    quantity: {  type :  Number , required : true }, // Preferred blood quantity in units
+    urgency: {  type:  String , required : true}, // Urgency level (e.g., 'Urgent', 'Routine')
+    usagePurpose: { type :  String , required : true }, // Purpose of blood usage (e.g., 'Surgeries', 'Emergency')
+    requiredDocumentation:  {type : String , required : true } // Any required documentation for blood collection
   },
+
+//  doners :
+//  {
+//  type : [
+//   {
+//     type: mongoose.Schema.Types.ObjectId, 
+//     ref : "Doner" , 
+//     required : [true , "doner id is required" ]
+//   }
+//  ], 
+
+
+//  validate : {
+//   validator :  function (val) {
+//     return Array.isArray(val) && val.length > 0 
+//   }, 
+//    message : " at least one id is required" 
+//  }
+//  }
+
+
 });
 
 

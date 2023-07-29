@@ -10,10 +10,11 @@ import logger from 'morgan'
 // import routers
 import { router as indexRouter } from './routes/index.js'
 import { router as donerRouter } from './routes/doner.route.js'
+import { router as hospitalRouter } from './routes/hospital.route.js'
 import { CustomError } from './services/customerror.js'
+import { log } from 'console'
 // create the express app
 const app = express()
-
 
 // basic middleware
 app.use(logger('dev'))
@@ -28,6 +29,7 @@ app.use(
 // mount imported routes
 app.use('/', indexRouter)
 app.use('/doner', donerRouter)
+app.use('/hospital' , hospitalRouter)
 
 
 // error handler middleware 
@@ -46,14 +48,16 @@ app.use(function (err, req, res, next) {
       }
     });
   } else {
+
     console.error('Error occurred');
     console.log("From middleware");
-  
+     
+    console.log(err);
     res.status(err.code || 500).json({
       success: false,
-      error: {
-        message: err.message
-      }
+      err :err.message, 
+       stack : err.stack , 
+      
     });
   }
 });
