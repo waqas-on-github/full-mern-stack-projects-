@@ -69,7 +69,8 @@ const login  = asynchandler(async (req, res) => {
      throw new  CustomError("please provide all fields" , 500 )
     }
    
-  const user =  await User.findOne({email , password}).select("+password") 
+  const user =  await User.findOne({email}).select("+password") 
+  console.log(user);
   if(!user) {
     throw new  CustomError("invalid craditionals" , 400)
   }

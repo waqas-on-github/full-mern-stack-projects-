@@ -1,7 +1,11 @@
 import { Router } from "express";
+import {  generateStripeOrderId} from "../controlers/order.controler.js";
+import { authorize, isLoggedIn } from "../middlewares/authhandler.js";
+
 const router = Router() 
 
-router.get('/' , (req, res) => {res.send("sanity check")})
+
+router.post('/pay' , isLoggedIn , generateStripeOrderId )
 
 
 export {

@@ -1,4 +1,4 @@
-import { Product } from "../models/product.schema.js.js"
+import { Product } from "../models/product.schema.js"
 import asynchandler from   '../services/asynchandler.js'
 import {  uploadmultiple} from "../services/uploadservice.js"
 import CustomError from '../utils/customError.js'
@@ -159,6 +159,7 @@ const getAllProducts = asynchandler(async(req,res) =>
 
 const getOneProduct  = asynchandler(async(req, res) => {
   const id = req.params.id 
+  console.log(id);
   
   const singleProduct = await Product.findById(id) 
   if(!singleProduct) {
