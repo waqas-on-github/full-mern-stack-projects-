@@ -1,42 +1,51 @@
-import mongoose from "mongoose";
-import { bloodreqSchema } from "./bloodrequirements.js";
-// genral user schema fields needed  
-// name , email password , forgotpass , resetpass for now .. 
-
-const donerchema =  mongoose.Schema({
-name : {
- type :String , 
- required : [ true , "doner name is required"] 
-},
-email : {
-    type :String , required : [ true , "email is required"] 
-
-} , 
-password : {
-type :String , 
-required : [true ,' password is required '], 
-minLength: [ 8, " at least 8 chars long "] , 
-
-select : false 
-}
-, 
-
-forgotpass :String , 
-resetpass : String , 
-requirments : {
-    
-type : bloodreqSchema ,  
-required : true     
-
-}
+import mongoose from  'mongoose'
+import { User } from './user.js';
 
 
-})
+const donerSchema =  mongoose.Schema({
 
-const Doner = mongoose.model("Doner" , donerchema)
+  age :{
+    type : Number , 
+    min :18 , max: 65 , 
+    required :true 
+  }, 
+
+    bloodgroup : {
+      type    : String
+      ,required :true 
+
+    } , 
+    dateOfBirth: {
+      type: Date,
+      required: true,
+    },
+    contactNumber: {
+      type: String,
+      required: true,
+    },
+    gender: {
+      type: String,
+      enum: ['Male', 'Female', 'Other'],
+      required: true,
+    }, 
+    vaccinationStatus : {
+
+      covid:{
+       type : Boolean 
+      ,required :true
+     }
+
+    }, 
+
+  
+
+});
+
+
+const Doner  = User.discriminator("Doner" , donerSchema)
+
 
 
 export {
-    Doner
+  Doner
 }
-

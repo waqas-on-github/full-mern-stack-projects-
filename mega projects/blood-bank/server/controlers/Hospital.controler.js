@@ -101,8 +101,6 @@ res.json({
 
 })
 
-
-
 const deleteAllHospitals = asyncHandler(async(req, res) => {
     const deleted = await Hospital.deleteMany()
     
@@ -123,17 +121,44 @@ const deleteOneHospital = asyncHandler(async(req, res ) => {
     if(!deleted) {
         throw new CustomError("unable to delete " , 400 , "db error on deleting recod ")
     }
+
+   res.status(200).json({
+    sucess: true , 
+    deleted
+   })
+
 })
 
 const  AllHospitals  = asyncHandler(async(req, res ) => {
-    const all =  await Hospital.find()
-    if(!all) {
-        res.ststus(200).json({
+    // gettin data from req.query 
+    const {name , city} = req.query
+    let all;
+    
+    if(!name || name=== undefined || !city) {
+        console.log("working ..");
+        all = await Hospital.find() 
+        
+        // if user wanna serch by hospital by name 
+    }
+     if(name){
+         all =  await Hospital.find({Hospitalname : { $regex : name , $options : "i"}})
+
+     }
+     if(cityName) {
+        all = await Hospital.find({"address.city" : {$regex : city , $options : "i"}})
+     }
+
+
+    if(!all){
+        throw new CustomError("can not find recods " , 400 , "db quering error ")
+    } 
+       
+    res.status(200).json({
             sucess : true , 
             all
 
         })
-    }
+    
 })
 
 
@@ -147,6 +172,11 @@ const getOneHospital = asyncHandler(async(req, res ) => {
     if(!hospital) {
         throw new CustomError("unable to delete " , 400 , "db error on deleting recod ")
     }
+
+    res.status(200).json({
+        sucess  : true , 
+        hospital
+    })
 })
 
 
@@ -162,14 +192,13 @@ const updateHosipital = asyncHandler(async (req , res) => {
         throw new CustomError("unable to update " , 400 , "db error on updating recod")
     }
 
+    res.status(201).json({
+        sucess : true , 
+        updated
+    })
 
 
 })
-
-
-
-
-
 
 
 

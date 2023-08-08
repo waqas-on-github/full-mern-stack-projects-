@@ -1,0 +1,1 @@
+1 user can see products 

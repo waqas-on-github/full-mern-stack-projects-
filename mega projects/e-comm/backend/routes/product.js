@@ -10,15 +10,15 @@ const router = Router()
 router.get('/products/delete' , isLoggedIn , authorize("ADMIN") ,  deleteall)
 
 //     ADMIN &  MODERATOR    
-router.post("/products/new"  ,   isLoggedIn , authorize('MODERATOR' , "ADMIN") ,  upload.array("images") , addproduct)
-router.get("/products/upload" , isLoggedIn ,  authorize('MODERATOR' , "ADMIN") ,  productroute )
+router.post("/products/new"  ,     upload.array("images") , addproduct)
+router.get("/products/upload" ,  productroute )
 router.delete("/product/:id" , isLoggedIn  ,  authorize('MODERATOR' , "ADMIN") , deleteproduct)
 
 
 
 // ADMIN USER MODERATOR ALL ACCESS
 router.get("/product/get/:id" , isLoggedIn , authorize("USER" , 'MODERATOR' , "ADMIN") ,  getOneProduct)
-router.get("/products/all" , isLoggedIn , authorize(  "USER" , "MODERATOR"  , "ADMIN") , getAllProducts)
+router.get("/products/all" , getAllProducts)
 
 export {
     router

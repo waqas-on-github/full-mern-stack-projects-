@@ -1,16 +1,27 @@
 import { Router } from "express";
-import { createAccount, deleteAllHospitals } from "../controlers/Hospital.controler.js";
+import {  createAccount,
+          deleteAllHospitals ,
+          AllHospitals  ,
+          updateHosipital ,
+          deleteOneHospital ,
+          getOneHospital
+} from "../controlers/Hospital.controler.js";
 
 const router = Router() 
 
-router.get("/" , (req, res ) => {
-    res.send("sanity check ")
-})
+
 
 
 router.post("/create" , createAccount)
-router.get("/delete/all" , deleteAllHospitals)
+router.delete("/delete/all" , deleteAllHospitals)
+router.delete("/delete/:id" , deleteOneHospital)
+router.get("/:id" , getOneHospital)
+router.put("/update/:id" , updateHosipital)
+
+
+router.get("/" , AllHospitals ) 
 
 export {
     router
 }
+

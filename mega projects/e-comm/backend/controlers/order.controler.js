@@ -29,7 +29,9 @@ const generateStripeOrderId = asynchandler (async (req, res ) => {
             }
 
               if(producByDb.stock < product.count) {
-                 throw new CustomError("out of stock" , 400)
+                return res.status(400).json({
+                    error: "Product quantity not in stock" 
+                })
               }
 
              totalAmount += producByDb.price * product.count;
@@ -63,11 +65,27 @@ const generateStripeOrderId = asynchandler (async (req, res ) => {
 })
 
 
+// Todo: add order in database and update product stock
 
+export const generateOrder = asynchandler(async(req, res) => {
+    //add more fields below
+    const {transactionId, products, coupon } = req.body
+})
 
+//Todo: get only my orders
+export const getMyOrders = asynchandler(async(req, res) => {
+    //
+})
 
+//Todo: get all my orders: Admin
+export const getAllOrders = asynchandler(async(req, res) => {
+    //
+})
 
-
+//Todo: update order Status: Admin
+export const updateOrderStatus = asynchandler(async(req, res) => {
+    //
+})
 
 
 export  {

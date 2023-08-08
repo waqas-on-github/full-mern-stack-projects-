@@ -9,10 +9,10 @@ import logger from 'morgan'
 
 // import routers
 import { router as indexRouter } from './routes/index.js'
-import { router as donerRouter } from './routes/doner.route.js'
+import { router as userRouter } from './routes/user.route.js'
 import { router as hospitalRouter } from './routes/hospital.route.js'
+import {router as donerrouter} from  './routes/doner.route.js'
 import { CustomError } from './services/customerror.js'
-import { log } from 'console'
 // create the express app
 const app = express()
 
@@ -28,8 +28,10 @@ app.use(
 
 // mount imported routes
 app.use('/', indexRouter)
-app.use('/doner', donerRouter)
+app.use('/user', userRouter)
 app.use('/hospital' , hospitalRouter)
+app.use("/doner" , donerrouter)
+
 
 
 // error handler middleware 

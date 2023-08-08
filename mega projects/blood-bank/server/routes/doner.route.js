@@ -1,23 +1,14 @@
-import { Router } from 'express'
-import { createDoner,  deleteAll, getAllDoners, getOneDoner, update } from '../controlers/doner.controler.js'
+import { Router } from "express";
+import { createDoner } from "../controlers/doner.controler.js";
 
-const router = Router()
-
-// GET localhost:3000/doner
-router.post('/new', createDoner)
-
-
-router.get("/all" , getAllDoners)
-router.get("/:id" , getOneDoner)
+const router = Router() 
+router.get("/" ,( req, res) => {
+    res.send("sanity check")
+})
 
 
-router.delete("/delete/all"  , deleteAll)
-router.delete("/delete/:id" , getOneDoner)
+router.post("/new" , createDoner)
 
-router.put ("/update/:id" , update)
-
-
-
-
-
-export { router }
+export {
+    router
+}
