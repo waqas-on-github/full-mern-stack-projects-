@@ -1,41 +1,44 @@
-import { useState  , useEffect } from "react"
+import {  useEffect } from "react"
+import { useDispatch , useSelector } from "react-redux"
+import { fetchAsyncData } from "../../fetchstore/productapi"
+import { Link, NavLink } from "react-router-dom"
+
 
 
 
 const Proudct = () => {
-const [products , setproducts] = useState([])
- useEffect(() => {
- 
- async function getproducts () {
-   try {
-      const data = await fetch("/api/v1/products/all")
-      const product = await data.json()
-      if(product) {
-          setproducts( ...products ,  product)
-    }
-
-   } catch (error) {
-     console.log(error);
-   }
- }
+  const dispatch = useDispatch()
+  const {data , loading , error } = useSelector((state ) => state.data)
+  console.log(data);
 
   
-getproducts()
-
+ useEffect(() => {
+ 
+dispatch(fetchAsyncData)
+console.log('effecting...');
  } , [])
 
-console.log();
+if(!data ||loading ) {
+  return <> loading ...</>
+}
 
+if(error ) {
+  return <> smething went wrong </>
+}
 
   return (
     <>
-   {products?.products?.map((item) => {
-    return (< div key={item._id}>
-    
-      <h1>{item.name}</h1>
-     </div> )
+     {data?.products?.map((item) => {
+      return <> 
+      < NavLink to={`/products/details/${item._id}`}  key={item._id} className="border w-[1000px] p-10 flex flex-col gap-5" >
+        <h2>{item?.name}</h2>
+        
+        <img  className="w-[500px]"  src={item?.photos[0]?.secure_url} alt="" />
+       
+      </NavLink>
+       </>
+     })}
 
-   })}
     </>
   )
 }
