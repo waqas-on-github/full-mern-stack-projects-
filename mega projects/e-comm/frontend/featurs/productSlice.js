@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    data: undefined,
+    data: false,
     loading: false,
-    error: undefined
+    error: false
   };
 
 
@@ -14,7 +14,7 @@ const initialState = {
    
         fetchDataStart : (state ) =>  {
             state.loading = true 
-            , state.error = undefined
+            , state.error = false
          } , 
 
          fetchDataSucess : (state , action) => {

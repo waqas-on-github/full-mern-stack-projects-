@@ -18,8 +18,8 @@ dispatch(fetchAsyncData)
 console.log('effecting...');
  } , [])
 
-if(!data ||loading ) {
-  return <> loading ...</>
+if(loading) {
+  return <> loading ... </>
 }
 
 if(error ) {
@@ -29,14 +29,14 @@ if(error ) {
   return (
     <>
      {data?.products?.map((item) => {
-      return <> 
+      return <   div key={item._id} > 
       < NavLink to={`/products/details/${item._id}`}  key={item._id} className="border w-[1000px] p-10 flex flex-col gap-5" >
         <h2>{item?.name}</h2>
         
         <img  className="w-[500px]"  src={item?.photos[0]?.secure_url} alt="" />
        
       </NavLink>
-       </>
+       </div>
      })}
 
     </>

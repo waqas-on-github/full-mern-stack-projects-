@@ -4,6 +4,7 @@ const Nav = () => {
    <>  
 <h1>Logo</h1>   
 <NavLink to ='/products'> products </NavLink>
+<NavLink  to='/signup'  > signup </NavLink>
  <Outlet/>
    </>
 
