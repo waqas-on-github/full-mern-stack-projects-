@@ -1,0 +1,13 @@
+.navcontainer {
+    
+    display: flex ;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.formcontainer {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-evenly;
+}

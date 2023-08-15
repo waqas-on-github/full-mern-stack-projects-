@@ -1,7 +1,13 @@
 import { useFormik } from "formik";
+import { setCredentials } from "../../featurs/authSlice";
+import { useDispatch } from "react-redux";
+import styles from  "../css/genral.module.css"
 
 
 export const Signup = () => {
+
+  const dispatch = useDispatch()
+
   const formik = useFormik({
     initialValues : {
       name : '' , 
@@ -9,16 +15,34 @@ export const Signup = () => {
       password: '' , 
       role : ''
     }, 
-    onSubmit : (values) => {
-      const vals = JSON.stringify(values  , null , 2)
-      console.log(vals);
+    onSubmit : async (values , {resetForm }) => {
+      try {
+        const response = await fetch('/api/v1/users/new', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(values),
+        });
+          console.log(values);
+        const data = await response.json();
+
+        console.log(data); // Handle the response data as needed
+        if(data) {
+          dispatch(setCredentials(data))
+        }
+        resetForm({values : ''})
+      } 
+      catch(error) {
+        console.log(error);
+      }
     }
   })
 
 
   return (
     <>
-      <form onSubmit={formik.handleSubmit} >
+      <form className={styles.formcontainer}  onSubmit={formik.handleSubmit} >
       <label htmlFor="name">Name </label>
         <input
          className='border'
@@ -49,19 +73,17 @@ export const Signup = () => {
 
       />
      <label htmlFor="role"> role </label>
-     <select 
-     className="border"
-     name="role"
-     type='text'
-     value={formik.values.role}
-     onChange={formik.handleChange}
-       
-       >
-    <option>USER</option>
-    <option>MODERATOR</option>
-    <option>ADMIN</option>
-
-       </select>
+     <select
+        className="border"
+        name="role"
+        value={formik.values.role}
+        onChange={formik.handleChange}
+      >
+        <option  disabled hidden     value=""> select</option>
+        <option value="USER">USER</option>
+        <option value="MODIRATOR">MODERATOR</option>
+        <option value="ADMIN">ADMIN</option>
+      </select>
 
 
 
