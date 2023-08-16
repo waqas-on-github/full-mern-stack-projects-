@@ -3,6 +3,7 @@
     display: flex ;
     align-items: center;
     justify-content: space-evenly;
+    gap: 20px;
 }
 
 .formcontainer {
@@ -10,4 +11,16 @@
     align-items: center;
     flex-direction: column;
     justify-content: space-evenly;
+}
+
+.model {
+    border: 1px solid black ;
+    position: relative;
+    top: 40px;
+    left: -15px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px ;
+    padding: 10px ;
+
 }

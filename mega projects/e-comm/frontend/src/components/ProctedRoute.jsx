@@ -4,7 +4,7 @@ import { Navigate, Outlet } from "react-router-dom";
 
 const AuthRequired = () => {
 const user= useSelector((state) => state.auth.userinfo)
- console.log(user);
+//  console.log(user);
 if(!user ||  user === null) {
     return <Navigate to ='/login' />
 }

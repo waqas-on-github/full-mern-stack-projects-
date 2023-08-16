@@ -1,7 +1,7 @@
 import {  useEffect } from "react"
 import { useDispatch , useSelector } from "react-redux"
 import { fetchAsyncData } from "../../fetchstore/productapi"
-import { Link, NavLink } from "react-router-dom"
+import {  NavLink } from "react-router-dom"
 
 
 
@@ -9,13 +9,12 @@ import { Link, NavLink } from "react-router-dom"
 const Proudct = () => {
   const dispatch = useDispatch()
   const {data , loading , error } = useSelector((state ) => state.data)
-  console.log(data);
+  // console.log(data);
 
   
  useEffect(() => {
  
 dispatch(fetchAsyncData)
-console.log('effecting...');
  } , [])
 
 if(loading) {

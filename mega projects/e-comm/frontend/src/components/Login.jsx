@@ -3,10 +3,9 @@ import { setCredentials } from '../../featurs/authSlice';
 import { useDispatch } from 'react-redux';
 import styles from  "../css/genral.module.css"
 
-
 const Login = () => {
-const dispatch = useDispatch()
 
+const dispatch = useDispatch()
     const formik = useFormik({
         initialValues : {
             email : "" , 
@@ -27,10 +26,10 @@ const dispatch = useDispatch()
                 const data =  await res.json()
                 if(data){
                     dispatch(setCredentials(data))
-                }
-                console.log(data);
-                resetForm({values : ''})
-            } catch (error) {
+                  }
+                  resetForm({values : ''})
+
+                } catch (error) {
                 console.log(error.message);
             }
         } 
