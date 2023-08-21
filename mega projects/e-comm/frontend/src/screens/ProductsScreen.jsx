@@ -1,4 +1,4 @@
-import Proudct from "../components/Proudct"
+import Proudct from "../components/products/Proudct"
 
 const ProductsScreen = () => {
   return (

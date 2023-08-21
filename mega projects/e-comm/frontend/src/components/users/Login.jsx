@@ -1,7 +1,7 @@
 import { useFormik } from 'formik'
-import { setCredentials } from '../../featurs/authSlice';
+import { setCredentials } from '../../../featurs/authSlice';
 import { useDispatch } from 'react-redux';
-import styles from  "../css/genral.module.css"
+import styles from  '../../css/genral.module.css'
 
 const Login = () => {
 

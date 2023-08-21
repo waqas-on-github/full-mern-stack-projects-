@@ -1,4 +1,4 @@
-import { logout } from "../../featurs/authSlice"
+import { logout } from "../../../featurs/authSlice"
 import { useDispatch  } from "react-redux"
 const Logout = () => {
 

@@ -1,6 +1,6 @@
 import { useSelector  } from "react-redux/es/hooks/useSelector"
 import { Outlet , Navigate } from "react-router-dom"
-import { logout } from "../../featurs/authSlice"
+import { logout } from "../../../featurs/authSlice"
 
 
 const Adminroute = () => {

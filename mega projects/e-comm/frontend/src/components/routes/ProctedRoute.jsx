@@ -11,7 +11,6 @@ if(!user ||  user === null) {
 
   return (
     <div>
-        <h1> this is proctacted head </h1>
         <Outlet/>
     </div>
   )

@@ -1,7 +1,7 @@
 import { NavLink, Outlet } from 'react-router-dom';
-import Logout from './Logout';
+import Logout from '../users/Logout';
 import { useSelector } from 'react-redux/es/hooks/useSelector';
-import styles  from '../css/genral.module.css'
+import styles  from '../../css/genral.module.css'
 import { useState } from 'react';
 import { RxCaretDown } from "react-icons/rx";
 
@@ -9,21 +9,27 @@ import { RxCaretDown } from "react-icons/rx";
 
 const Nav = () => {
   const [isactive , setisactive ] = useState(false)
+  
+  const handleMouse = () => {
+    setisactive(!isactive)
+  }
+
   const user = useSelector((state) => state.auth.userinfo);
+  
   return (
     <nav >
   
       <div className={styles.navcontainer}>
-        <h1>Logo</h1>
+        <NavLink to ='/' > Logo  </NavLink>
         <NavLink to="/products" >Products</NavLink>
-        <NavLink to="/pro" >Pro</NavLink>
+        <NavLink to='/Cart' > Cart</NavLink>
         {/* if user is loggend in show only user name and logout button */}
         {user? <> 
          <div className= {styles.navcontainer} >
-          <span> 
-            {user?.user?.name} <span onMouseEnter={() => setisactive(!isactive)} > <RxCaretDown/> </span>
-          </span>
-           {isactive&& <div  onMouseLeave={() => (!isactive)}  className= {styles.model} > 
+
+          <span> {user?.user?.name} <span onMouseEnter={handleMouse} > <RxCaretDown/> </span></span>
+          
+           {isactive&& <div  onMouseLeave={handleMouse}  className= {styles.model} > 
                
                <NavLink to = '/profile' >   my Profile  </NavLink>
                <Logout/>

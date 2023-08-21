@@ -1,21 +1,15 @@
-import {  useEffect } from "react"
-import { useDispatch , useSelector } from "react-redux"
-import { fetchAsyncData } from "../../fetchstore/productapi"
 import {  NavLink } from "react-router-dom"
-
+import { useQuery } from "@tanstack/react-query"
+import * as productApi from '../../../fetchstore/fetchProduct.js'
 
 
 
 const Proudct = () => {
-  const dispatch = useDispatch()
-  const {data , loading , error } = useSelector((state ) => state.data)
-  // console.log(data);
 
-  
- useEffect(() => {
- 
-dispatch(fetchAsyncData)
- } , [])
+const {data  , error , loading}  = useQuery(['users' , 'hello'] , productApi.getProducts)
+console.log(data);
+
+
 
 if(loading) {
   return <> loading ... </>
@@ -27,7 +21,8 @@ if(error ) {
 
   return (
     <>
-     {data?.products?.map((item) => {
+     {data?.map((item) => {
+
       return <   div key={item._id} > 
       < NavLink to={`/products/details/${item._id}`}  key={item._id} className="border w-[1000px] p-10 flex flex-col gap-5" >
         <h2>{item?.name}</h2>
@@ -36,6 +31,7 @@ if(error ) {
        
       </NavLink>
        </div>
+
      })}
 
     </>

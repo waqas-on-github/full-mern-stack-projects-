@@ -37,9 +37,9 @@ const formik = useFormik({
      })
    
    const data = await responce.json()
-   console.log(data);
+  //  console.log(data);
    
-//    resetForm({values : ''})
+    resetForm({values : ''})
             }
 
 })

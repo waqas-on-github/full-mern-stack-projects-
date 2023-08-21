@@ -11,8 +11,12 @@
     },
     "dependencies": {
         "@reduxjs/toolkit": "^1.9.5",
+        "@tanstack/react-query": "^4.33.0",
+        "@tanstack/react-query-devtools": "^4.33.0",
         "axios": "^1.4.0",
         "formik": "^2.4.3",
+        "localtunnel": "^2.0.2",
+        "node-tunnel": "^4.0.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
         "react-icons": "^4.10.1",
