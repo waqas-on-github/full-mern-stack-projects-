@@ -1,19 +1,22 @@
-import { useEffect } from "react"
-import { useDispatch } from "react-redux"
-import { fetchCartData } from "../../../fetchstore/cartapi"
-
+import { useQuery } from "@tanstack/react-query"
+import axios from "axios"
+  
 
 const Cart = () => {
+// getting cart data by user id  from endpoint 
 
-const dispatch = useDispatch()
+const {data  } = useQuery({
+  queryKey :  ['cart/items'] , 
+  queryFn : async () => {
+     const data = await axios.get("/api/v1/cart/items")
+    return data.data
 
-useEffect(()=> {
+  }
+  
+  
+})
 
-  const data =  dispatch(fetchCartData()) 
-  console.log(data);
-
-
-} , [])
+console.log(data);
 
 
 

@@ -1,32 +1,44 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom"
-import { useQuery } from "@tanstack/react-query";
+import { useQuery  , useMutation, useQueryClient} from "@tanstack/react-query";
 import axios from "axios";
 
- 
+ // product details 
 const DetailsScreen = () => {
     
+const [Quantity , setQuantity] = useState(0)
 const params = useParams() 
+const QueryClint = useQueryClient()
 
-const {data , loading , error  }  = useQuery({
-  
+
+// getting data from api 
+
+const {data , isLoading , isError  }  = useQuery({
   queryKey : [ `/product/${params?.id}`], 
-  queryFn  : () => axios.get(`/api/v1//product/get/${params?.id}`)
+  queryFn  : () => axios.get(`/api/v1/product/get/${params?.id}`)
   .then(responce => responce?.data)
 }
 )
    
-console.log(data );
 
 
+const { data : postData,  isError :PostError , isLoading : postloading  ,  mutate , isSuccess } = useMutation({
+  mutationFn :  async (dataToCart) => {
+    return  await axios.post('/api/v1/cart/add' , dataToCart)
+  }
+, 
+onSuccess : () => {
 
- 
-     const [Quantity , setQuantity] = useState(0)
+  QueryClint.invalidateQueries([])
+}
+  
+})
+
+
 
      
      const  handleDecreaseChange  = () => {
       if(Quantity >= 1){
-
         setQuantity(Quantity -1 )
       }
      }
@@ -40,27 +52,26 @@ console.log(data );
 
 
      
+  const dataToCart = {
+      id :  data?.singleProduct?._id , 
+      Quantity
+     }
     
         
-   const handleClick = () => {
+   const handleClick = async () => {
     
-   const dataToCart = {
-    id :  data?.singleProduct?._id , 
-    Quantity
-   }
-
-   console.log(dataToCart);
-
+   mutate(dataToCart)
+  
    }
 
         
-      if(loading) {
+      if(isLoading) {
         return <>  
          loading ...
         </>
       }
 
-      if(error) {
+      if(isError) {
         return <>  check your internet connection and try again </>
       }
 
@@ -79,6 +90,8 @@ console.log(data );
     <p>Quantity </p> <button onClick={handleDecreaseChange} >-</button> {Quantity} <button onClick={handleIncreaseChange} >+</button> 
 
     <button onClick={handleClick}> Add To Cart</button>  
+
+    {console.log(postData)}
 
  </>
 

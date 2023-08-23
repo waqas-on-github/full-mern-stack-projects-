@@ -28,7 +28,6 @@ const Nav = () => {
          <div className= {styles.navcontainer} >
 
           <span> {user?.user?.name} <span onMouseEnter={handleMouse} > <RxCaretDown/> </span></span>
-          
            {isactive&& <div  onMouseLeave={handleMouse}  className= {styles.model} > 
                
                <NavLink to = '/profile' >   my Profile  </NavLink>
