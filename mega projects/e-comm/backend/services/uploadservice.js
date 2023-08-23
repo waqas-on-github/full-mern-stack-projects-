@@ -26,7 +26,7 @@ const uploadmultiple = async (req, res) => {
   const urls = []
   const files  = req.files ; 
   
-   const uploadpromsis =   files.map((file ) => {
+   const uploadpromsis =  files.map((file ) => {
 
    return  new Promise(async ( resolve  , reject ) => {
     try {

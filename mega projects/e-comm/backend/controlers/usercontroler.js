@@ -20,9 +20,10 @@ const signup  = asynchandler(  async (req, res) =>  {
  ******************************************************/
 
   // get data from user
-   const {name , email ,password , role}   = req.body
+   const {name , email ,password , role  }   = req.body
+   console.log(req.body);
   // validation  
-   if((!name || !email ||  !password)) {
+   if((!name || !email ||  !password  || !role)) {
     throw new  CustomError("please add all fields" , 400 )
    }
 
@@ -34,9 +35,11 @@ const signup  = asynchandler(  async (req, res) =>  {
   //  lets add this data to db 
    
     const user = await User.create({
-      name  ,  email, password , role 
+      name  , email, password , role
     })
    
+
+    // console.log(user);
     if(!user) {
       throw new CustomError("can not create user " , 400)
     }

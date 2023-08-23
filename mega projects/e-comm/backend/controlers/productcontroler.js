@@ -16,8 +16,9 @@ const cloudinary = cloudnaryconfig()
 
 
 const addproduct  = asynchandler(  async (req, res ) =>{
-  console.log(req.user);
-  const urls = []
+  // console.log(req.user);
+  // console.log(req.files);
+  // console.log(req.body);
   const files = req.files
   
    
@@ -45,7 +46,7 @@ const addproduct  = asynchandler(  async (req, res ) =>{
    const result =   await uploadmultiple(req,res)
    
       
-
+console.log(req.body);
    const product = new Product({
     name ,  description  ,price , catagory, collectionId,
     photos : result.map((photo) => ({ secure_url : photo.secure_url , public_id :photo.public_id}))   })

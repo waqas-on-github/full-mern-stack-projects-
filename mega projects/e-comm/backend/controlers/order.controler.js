@@ -8,6 +8,11 @@ const stripe = new  Stripe(process.env.stripe_key)
 
 const generateStripeOrderId = asynchandler (async (req, res ) => {
     const {products , couponCode  } = req.body  
+
+    console.log(req.body);
+
+
+    
     if (!products || products.length === 0) {
         throw new CustomError("No product found", 400)
     }
