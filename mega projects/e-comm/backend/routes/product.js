@@ -18,7 +18,7 @@ router.delete("/product/:id" , isLoggedIn  ,  authorize('MODERATOR' , "ADMIN") ,
 
 // ADMIN USER MODERATOR ALL ACCESS
 router.get("/product/get/:id"  ,  getOneProduct)
-router.get("/products/all" , getAllProducts)
+router.get("/products/all" , isLoggedIn, getAllProducts)
 
 export {
     router

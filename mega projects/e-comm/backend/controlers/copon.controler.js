@@ -34,7 +34,7 @@ const createCoupon = asynchandler(async(req, res ) => {
 
 
    res.json ({
-    sucess: true ,  
+    success: true ,  
     coupon
    })
 
@@ -70,7 +70,7 @@ const updateCoupen = asynchandler(async(req, res ) => {
 
   
   res.status(200).json({
-    sucess : true , 
+    success : true , 
     goupdated
   })
 
@@ -92,7 +92,7 @@ const deletecoupon = asynchandler(async(req, res ) => {
     throw new CustomError("coupon can not be deleted" , 400 ) 
    } 
   res.status(200).json({
-    sucess : true , 
+    success : true , 
     deleted
   })
 
@@ -106,7 +106,7 @@ const  getAllCoupons = asynchandler(async(req, res ) => {
     throw new CustomError(" coupons not found " , 400)
   }
   res.status(200).json({
-    sucess : true , 
+    success : true , 
     allCoupons
   })
 
@@ -121,7 +121,7 @@ const getOnecoupon = asynchandler(async(req, res ) => {
    
 
     res.status(200).json({
-      sucess: true  , coupon
+      success: true  , coupon
     })
 
    })
@@ -134,7 +134,7 @@ const getOnecoupon = asynchandler(async(req, res ) => {
        }
 
        res.status(200).json({
-        sucess:true , 
+        success:true , 
         alldeleted
        })
    })

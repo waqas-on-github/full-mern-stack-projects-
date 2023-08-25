@@ -51,7 +51,7 @@ const signup  = asynchandler(  async (req, res) =>  {
   res.cookie("token" , token  , cookieoptions)
 
  return  res.status(201).json({
-    sucess  : true , 
+    success  : true , 
     token , 
     user
    })
@@ -86,7 +86,7 @@ const login  = asynchandler(async (req, res) => {
      user.password = undefined , 
      res.cookie('token' , token , cookieoptions) ;
    return res.status(201).json({
-      sucess  : true , 
+      success  : true , 
       token , 
       user
      })
@@ -126,7 +126,7 @@ const getprofile = asynchandler(async(req, res) => {
   }
 
    res.status(200).json({
-     sucess : true , 
+     success : true , 
      profile : user
    })
 })
@@ -215,8 +215,8 @@ const forgotPasswoed = asynchandler(async(req, res ) => {
    
 
 res.json({
-  sucess : true, 
-  message :  'email sended sucessfuly check you inbox'
+  success : true, 
+  message :  'email sended successfuly check you inbox'
 })
 
 })

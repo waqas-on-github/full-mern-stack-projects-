@@ -21,6 +21,10 @@ export const isLoggedIn = asynchandler(async (req, res, next) => {
         const decodedJwtPayload = JWT.verify(token, process.env.SECRET);
 
          req.user = await User.findById(decodedJwtPayload._id, "name email role")
+        //  console.log("from auth middleware ");
+        //  console.log(req.user);
+        //  console.log("from auth middleware ");
+
          next()
         if(!req.user) {
 

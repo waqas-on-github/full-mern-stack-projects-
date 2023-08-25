@@ -77,7 +77,7 @@ const findByCollection = asynchandler( async (req, res ) => {
     const  products = await  Product.find({collectionId:collectionID})    
     // cna list collections here  
     res.json({
-      sucess :true , products
+      success :true , products
     })
 
 
@@ -143,8 +143,13 @@ const deleteproduct = asynchandler(async (req, res) => {
 })
 
 const getAllProducts = asynchandler(async(req,res) => 
-{
 
+{
+  console.log("from product crtl");
+  console.log(req.user);
+  console.log("from product crtl");
+
+  
   const products = await Product.find() 
   if(!products) {
     throw new   CustomError("cabn not find products " , 400) 
@@ -152,7 +157,7 @@ const getAllProducts = asynchandler(async(req,res) =>
 
 
  res.json({
-  sucess : true , 
+  success : true , 
   products
  })
 
@@ -168,7 +173,7 @@ const getOneProduct  = asynchandler(async(req, res) => {
   }
   
   res.json ({
-    sucess : true  ,  
+    success : true  ,  
     singleProduct
   })
 

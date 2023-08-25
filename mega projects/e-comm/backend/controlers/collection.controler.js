@@ -14,7 +14,7 @@ if(!name) {
 const collection = await Collection.create({name}) 
 
 res.status(201).json ({
-    sucess : true   , 
+    success : true   , 
     message : "collection was created "
     , collection
 })

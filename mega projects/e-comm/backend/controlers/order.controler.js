@@ -55,13 +55,13 @@ const generateStripeOrderId = asynchandler (async (req, res ) => {
       });
     
       if(!paymentIntent) {
-        throw new CustomError("payment not sucessfull" , 400)
+        throw new CustomError("payment not successfull" , 400)
       }
 
 
       res.status(200).json({
-        sucess : true , 
-        message : "payment intent created sucessfully " , 
+        success : true , 
+        message : "payment intent created successfully " , 
         paymentIntent : paymentIntent.client_secret
 
       })
