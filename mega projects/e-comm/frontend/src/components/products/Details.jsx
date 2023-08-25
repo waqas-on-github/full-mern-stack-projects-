@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useParams } from "react-router-dom"
 import { useQuery  , useMutation, useQueryClient} from "@tanstack/react-query";
 import axios from "axios";
-import {updateuicount} from '../../../featurs/cartSlice'
+ import {updateuicount} from '../../../featurs/cartSlice'
 import { useDispatch } from "react-redux";
 
  // product details 
@@ -37,31 +37,37 @@ onSuccess : () => {
 
     queryClient.invalidateQueries({ queryKey: ['cart/items'] }) 
 
-   console.log("sucess");
+  //  console.log("sucess");
 }, 
 onMutate : (newitem ) => {
   console.log(newitem.Quantity);
-  dispatch(updateuicount(newitem.Quantity))
+  if(newitem.Quantity!==null && newitem.Quantity !== undefined)
+  {
+    console.log(newitem.Quantity);
+    dispatch(updateuicount(newitem.Quantity))
+  }
+
+  else{
+     dispatch(updateuicount(0))
+    console.log(newitem.Quantity);
+
+  }
 }
 
 
-  
-
 })
 
-console.log(postData);
 
      
-     const  handleDecreaseChange  = () => {
-      if(Quantity >= 1){
-        setQuantity(Quantity -1 )
-      }
-     }
-     
-
-     const  handleIncreaseChange = () => {
-      setQuantity(Quantity +1)
-     }
+   const  handleDecreaseChange  = () => {
+    if(Quantity >= 1){
+      setQuantity(Quantity -1 )
+    }
+   }
+  
+   const  handleIncreaseChange = () => {
+    setQuantity(Quantity +1)
+   }
 
 
 
@@ -106,7 +112,6 @@ console.log(postData);
 
     <button onClick={handleClick}> Add To Cart</button>  
 
-    {console.log(postData)}
 
  </>
 

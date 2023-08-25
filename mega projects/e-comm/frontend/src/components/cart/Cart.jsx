@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 import { useDispatch } from "react-redux"
-import { setUicount , deleteCart } from "../../../featurs/cartSlice"
+ import { setUicount , deleteCart } from "../../../featurs/cartSlice"
 
 
 
@@ -36,11 +36,13 @@ const  {data  , isSuccess , isError  } = useQuery({
     console.log(totallength);
 
 
-    if(isSuccess&& (totallength !== null || undefined)) {
-      dispatch(setUicount(totallength))
+    if((totallength !== null) && totallength !== undefined) {
+       dispatch(setUicount(totallength))
     }
     else {
-     dispatch(setUicount(0))
+    //  dispatch(setUicount(0))
+    dispatch(setUicount(0))
+
     }
   } 
   
