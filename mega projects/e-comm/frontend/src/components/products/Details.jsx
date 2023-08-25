@@ -2,13 +2,16 @@ import { useState } from "react";
 import { useParams } from "react-router-dom"
 import { useQuery  , useMutation, useQueryClient} from "@tanstack/react-query";
 import axios from "axios";
+import {updateuicount} from '../../../featurs/cartSlice'
+import { useDispatch } from "react-redux";
 
  // product details 
 const DetailsScreen = () => {
     
 const [Quantity , setQuantity] = useState(0)
 const params = useParams() 
-const QueryClint = useQueryClient()
+const queryClient = useQueryClient()
+const dispatch = useDispatch()
 
 
 // getting data from api 
@@ -22,19 +25,31 @@ const {data , isLoading , isError  }  = useQuery({
    
 
 
+
+
 const { data : postData,  isError :PostError , isLoading : postloading  ,  mutate , isSuccess } = useMutation({
   mutationFn :  async (dataToCart) => {
     return  await axios.post('/api/v1/cart/add' , dataToCart)
   }
+
 , 
 onSuccess : () => {
 
-  QueryClint.invalidateQueries([])
+    queryClient.invalidateQueries({ queryKey: ['cart/items'] }) 
+
+   console.log("sucess");
+}, 
+onMutate : (newitem ) => {
+  console.log(newitem.Quantity);
+  dispatch(updateuicount(newitem.Quantity))
 }
+
+
   
+
 })
 
-
+console.log(postData);
 
      
      const  handleDecreaseChange  = () => {

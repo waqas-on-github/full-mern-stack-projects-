@@ -7,6 +7,8 @@ import { RxCaretDown } from "react-icons/rx";
 
 
 
+
+
 const Nav = () => {
   const [isactive , setisactive ] = useState(false)
   
@@ -14,15 +16,17 @@ const Nav = () => {
     setisactive(!isactive)
   }
 
-  const user = useSelector((state) => state.auth.userinfo);
+  const user = useSelector((state) => state?.auth?.userinfo);
+  const cartLength = useSelector((state) => state?.cart?.UiItemCount)
   
+
   return (
     <nav >
   
       <div className={styles.navcontainer}>
         <NavLink to ='/' > Logo  </NavLink>
         <NavLink to="/products" >Products</NavLink>
-        <NavLink to='/Cart' > Cart</NavLink>
+        <NavLink to='/Cart' > Cart </NavLink>  <h1>{cartLength} </h1>
         {/* if user is loggend in show only user name and logout button */}
         {user? <> 
          <div className= {styles.navcontainer} >

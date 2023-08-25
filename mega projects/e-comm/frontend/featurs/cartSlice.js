@@ -3,10 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   
-    fetchedProducts : [] , 
-    localProducts : []
-
-
+   UiItemCount : 0
 
 }
 
@@ -17,15 +14,31 @@ const cartSlice =  createSlice ({
    initialState , 
    
    reducers : {
-    addlocalProduct : (state , action) => {
-        state.localProducts.push(action.payload)
-    }
+  
+   // set fetchd items count to uilengt
+   setUicount : (state  , action) => {
+      state.UiItemCount = action.payload
+   } , 
+   updateuicount : (state , action ) => {
+     
+      state.UiItemCount += action.payload
+   }  
+, 
+   deleteCart : (state , action)  =>{
+      state.UiItemCount = 0
+   }, 
+
+   deletItem : (state, action) => {
+      state.UiItemCount -= action.payload
    }
+
+
+   }  
 
 
 })
 
 
-export const {addlocalProduct} = cartSlice.actions
+export const {setUicount , updateuicount , deletItem , deleteCart} = cartSlice.actions
 
 export default cartSlice.reducer
