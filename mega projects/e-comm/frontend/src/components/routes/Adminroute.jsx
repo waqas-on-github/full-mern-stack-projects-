@@ -1,6 +1,5 @@
 import { useSelector  } from "react-redux/es/hooks/useSelector"
 import { Outlet , Navigate } from "react-router-dom"
-import { logout } from "../../../featurs/authSlice"
 
 
 const Adminroute = () => {
@@ -11,6 +10,9 @@ if(user ==="ADMIN") {
     return <Outlet/>
 }
 
+else {
+    return <Navigate to='/login' />
+}
 }
 
 export default Adminroute

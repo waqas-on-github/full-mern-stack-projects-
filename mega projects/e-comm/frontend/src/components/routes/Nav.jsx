@@ -16,14 +16,16 @@ const Nav = () => {
     setisactive(!isactive)
   }
 
+ // getting user from redux store 
   const user = useSelector((state) => state?.auth?.userinfo);
+
   const cartLength = useSelector((state) => state?.cart?.UiItemCount)
   
 
   return (
-    <nav >
+    <>
   
-      <div className={styles.navcontainer}>
+      <nav className={styles.navcontainer}>
         <NavLink to ='/' > Logo  </NavLink>
         <NavLink to="/products" >Products</NavLink>
         <NavLink to='/Cart' > Cart </NavLink>  <h1>{cartLength} </h1>
@@ -42,7 +44,7 @@ const Nav = () => {
         </> :
         
         <>  
-        <div className= {styles.navcontainer} > 
+        <div  > 
         <NavLink to="/signup" >Signup</NavLink>
         <NavLink to="/login" >Login</NavLink>
         </div>
@@ -52,14 +54,19 @@ const Nav = () => {
 
      {user?.user?.role==="ADMIN" ?  <>  
      
-      <NavLink to='/upload' > upload products </NavLink>
-     
+      {/* <NavLink to='/upload' > upload products </NavLink> */}
+      {/* <NavLink to ='/manage' > manage products </NavLink>  */}
+
+      <NavLink  to ='dashboard' > Dashboard </NavLink>
+      
      </>  : null}
+      </nav>
 
 
-      </div>
+      <div >
       <Outlet />
-    </nav>
+      </div>
+    </>
   );
 };
 

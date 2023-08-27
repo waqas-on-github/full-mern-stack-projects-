@@ -25,10 +25,58 @@
 
 }
 
-
 .cartbox {
     margin: 50px ;
     width: 200px;
     border: 1px solid red ;
     padding: 20px;
+}
+
+.manage_product {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column; 
+}
+
+.side_nav {
+    width: 20%
+
+}
+
+
+
+.Dash_container {
+    margin-top: 100px;
+    display: flex;
+    width: 100%;
+
+}
+
+.img {
+    width: 200px;
+} 
+
+.product_page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 200px;
+}
+
+.Dash_product_page {
+ width: 80%;
+ display: flex;
+ flex-wrap: wrap;
+ align-items: center;
+ justify-content: center;
+ flex-direction: column;
+ gap: 40px;
+ padding: 20px;
+
+} 
+.Dash_product {
+    width: 100%;
 }

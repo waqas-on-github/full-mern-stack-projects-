@@ -1,29 +1,23 @@
 import { useState } from "react";
 import { useParams } from "react-router-dom"
-import { useQuery  , useMutation, useQueryClient} from "@tanstack/react-query";
-import axios from "axios";
+import {useMutation, useQueryClient} from "@tanstack/react-query";
  import {updateuicount} from '../../../featurs/cartSlice'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import useProduct from "../../../Apis/product/userProduct";
 
  // product details 
 const DetailsScreen = () => {
-    
+const user = useSelector((state) => state?.auth?.userinfo?.user?.role)
+console.log(user)
 const [Quantity , setQuantity] = useState(0)
 const params = useParams() 
 const queryClient = useQueryClient()
 const dispatch = useDispatch()
 
+/// fetching single product from useproduct hook
+const { data, isLoading , isError } = useProduct(params?.id)
 
-// getting data from api 
-
-const {data , isLoading , isError  }  = useQuery({
-  queryKey : [ `/product/${params?.id}`], 
-  queryFn  : () => axios.get(`/api/v1/product/get/${params?.id}`)
-  .then(responce => responce?.data)
-}
-)
-   
-
+ 
 
 
 
@@ -95,8 +89,7 @@ onMutate : (newitem ) => {
       if(isError) {
         return <>  check your internet connection and try again </>
       }
-
-
+      console.log(data);
         const singleProduct = data?.singleProduct;
         const name = singleProduct?.name ?? "Product Name Not Available";
         const catagory = singleProduct?.catagory ?? "Category Not Available";
@@ -104,15 +97,17 @@ onMutate : (newitem ) => {
         const price = singleProduct?.price ?? "Price Not Available";
  return (
     <>
-       <h1>{name}</h1> 
+      <h1>{name}</h1> 
       <img src={photos[0].secure_url} alt="" />  
-     <p> price :  $ {price}</p>
-    <p> Catagory :  {catagory}</p> 
-    <p>Quantity </p> <button onClick={handleDecreaseChange} >-</button> {Quantity} <button onClick={handleIncreaseChange} >+</button> 
-
-    <button onClick={handleClick}> Add To Cart</button>  
-
-
+      <p> price :  $ {price}</p>
+      <p> Catagory :  {catagory}</p> 
+   
+   {user==="ADMIN" ?  <> you are admin </> :   
+     <> 
+     <button onClick={handleClick}> Add To Cart</button>  
+     <p>Quantity </p> <button onClick={handleDecreaseChange} >-</button> {Quantity} <button onClick={handleIncreaseChange} >+</button> 
+     </>
+ }
  </>
 
  )    

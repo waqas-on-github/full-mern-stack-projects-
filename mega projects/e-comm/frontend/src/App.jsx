@@ -10,7 +10,10 @@ import Adminroute from './components/routes/Adminroute'
 import Modirator from './components/routes/ModiratorRoute'
 import Profile from './components/users/Profile'
 import Productuploadscreen from './screens/Productuploadscreen'
-import Cart  from './components/cart/Cart'
+import CartScreen from './screens/CartScreen'
+import Deleteproduct from './components/products/admin/Deleteproduct'
+import Dashboard from './components/Admin/Dashboard'
+import ProductInfo from './components/products/admin/ProductInfo'
 function App() {
 
   return (
@@ -22,14 +25,22 @@ function App() {
             <Route path='products/details/:id' element={<DetailsScreen/>} >  </Route>
             <Route path='signup' element ={<Signup/>} />
             <Route path='login'  element= {<Login/>} />
-            <Route path='cart' element ={<Cart/>} />
+            <Route path='cart' element ={<CartScreen/>} />
 
             <Route  element = {<AuthRequired/>}  >
               <Route path='profile' element ={<Profile/>}/>
             </Route>
 
           <Route element={<Adminroute/>} >
-             <Route path='upload' element= {<Productuploadscreen/>} />
+              <Route path='dashboard' element= {<Dashboard/>} > 
+
+                 <Route path='upload' element= {<Productuploadscreen/>} />
+                 <Route path='manage' element ={<Deleteproduct/>} /> 
+                 <Route  path ='productInfo/:id'  element = {<ProductInfo/>}/>
+                 todo complete this later 
+
+              </Route>
+              
           </Route>
 
          <Route element={<Modirator/>} >

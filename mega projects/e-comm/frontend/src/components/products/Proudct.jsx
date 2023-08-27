@@ -1,14 +1,12 @@
 import { NavLink } from "react-router-dom";
-import { useQuery } from "@tanstack/react-query";
-import * as productApi from "../../../fetchstore/fetchProduct.js";
+import * as  S from '../../css/genral.module.css'
+import useProducts from "../../../Apis/product/useProducts.js";
 
 const Proudct = () => {
-  // Using the useQuery hook to fetch data from the "products" endpoint using the productApi.getProducts function.
-  const { data, isError, isLoading } = useQuery(
-    ["products", "hello"], // Query key
-    productApi.getProducts // Function that fetches products
-  );
-  
+  // Using the useQuery hook to fetch data from the "useTroducts" hook
+    const {data , isLoading , isError} = useProducts()
+
+
   // Check if the data is still loading
   if (isLoading) {
     return <>loading ...</>;
@@ -34,7 +32,7 @@ const Proudct = () => {
               <h2>{item?.name}</h2>
               {/* Display the product image */}
               <img
-                className="w-[500px]"
+                className={S.img}
                 src={item?.photos[0]?.secure_url}
                 alt=""
               />
