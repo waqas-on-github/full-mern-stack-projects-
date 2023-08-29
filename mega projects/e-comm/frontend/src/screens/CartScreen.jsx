@@ -7,8 +7,8 @@ import useAddress from '../../Apis/address/useAddress.js'
 const CartScreen = () => {
  const {mutate} = useMutateAll()
  const navigate = useNavigate()
-  const {data } = useAddress()
-  console.log(data);
+  const {data} = useAddress()
+
   
 
 const handleClick = () => {

@@ -15,6 +15,7 @@ import Deleteproduct from './components/products/admin/Deleteproduct'
 import Dashboard from './components/Admin/Dashboard'
 import ProductInfo from './components/products/admin/ProductInfo'
 import Address from './components/address/Address'
+import Card from './components/stripe_payments/Card'
 function App() {
 
   return (
@@ -22,6 +23,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Nav/>} >
+            <Route path='pay' element ={<Card/>}/>
             <Route path='products' element={<ProductsScreen/>} />
             <Route path='products/details/:id' element={<DetailsScreen/>} >  </Route>
             <Route path='signup' element ={<Signup/>} />
