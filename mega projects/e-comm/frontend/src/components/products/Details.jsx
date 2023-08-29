@@ -4,6 +4,7 @@ import {useMutation, useQueryClient} from "@tanstack/react-query";
  import {updateuicount} from '../../../featurs/cartSlice'
 import { useDispatch, useSelector } from "react-redux";
 import useProduct from "../../../Apis/product/userProduct";
+import axios from "axios";
 
  // product details 
 const DetailsScreen = () => {
@@ -102,12 +103,10 @@ onMutate : (newitem ) => {
       <p> price :  $ {price}</p>
       <p> Catagory :  {catagory}</p> 
    
-   {user==="ADMIN" ?  <> you are admin </> :   
-     <> 
-     <button onClick={handleClick}> Add To Cart</button>  
      <p>Quantity </p> <button onClick={handleDecreaseChange} >-</button> {Quantity} <button onClick={handleIncreaseChange} >+</button> 
-     </>
- }
+     <button onClick={handleClick}> Add To Cart </button>  
+     
+ 
  </>
 
  )    

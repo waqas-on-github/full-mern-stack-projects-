@@ -24,7 +24,7 @@ const cartSlice =  createSlice ({
       state.UiItemCount += action.payload
    }  
 , 
-   deleteCart : (state , action)  =>{
+   deleteCart : (state )  =>{
       state.UiItemCount = 0
    }, 
 

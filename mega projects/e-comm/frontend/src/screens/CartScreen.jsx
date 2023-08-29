@@ -1,29 +1,31 @@
-import axios from "axios"
+import { useNavigate } from "react-router-dom"
+import useMutateAll from "../../Apis/Cart/useMutateAll"
 import Cart from "../components/cart/Cart"
-import { useMutation } from "@tanstack/react-query"
-import { useQueryClient } from "@tanstack/react-query"
+import useAddress from '../../Apis/address/useAddress.js'
+
 
 const CartScreen = () => {
+ const {mutate} = useMutateAll()
+ const navigate = useNavigate()
+  const {data } = useAddress()
+  console.log(data);
   
-  const QueryClint = useQueryClient()
-  const {mutate } = useMutation({
-   mutationFn : () => {
-     return axios.delete('/api/v1/cart/delete')
-   },
 
-   onSuccess : () => {
-    QueryClint.invalidateQueries( { queryKey : ["cart/items"]})
-   
+const handleClick = () => {
+  if(data?.address) {
+    navigate("/")
   }
+else {
+  navigate('/address')
 
-  })
+}
+}
 
   return (
  <> 
  <Cart  />
- <button onClick={() => {
-  mutate()
- }} > Delete All  </button>
+ <button onClick={() => {mutate()}} > Delete All  </button>
+ <button onClick ={handleClick} > PROCEED TO CHECKOUT  </button>
  </>
   )
 }

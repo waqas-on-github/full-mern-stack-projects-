@@ -14,6 +14,7 @@ import CartScreen from './screens/CartScreen'
 import Deleteproduct from './components/products/admin/Deleteproduct'
 import Dashboard from './components/Admin/Dashboard'
 import ProductInfo from './components/products/admin/ProductInfo'
+import Address from './components/address/Address'
 function App() {
 
   return (
@@ -29,6 +30,7 @@ function App() {
 
             <Route  element = {<AuthRequired/>}  >
               <Route path='profile' element ={<Profile/>}/>
+              <Route path= "address"  element={<Address/>}/>
             </Route>
 
           <Route element={<Adminroute/>} >
@@ -37,7 +39,7 @@ function App() {
                  <Route path='upload' element= {<Productuploadscreen/>} />
                  <Route path='manage' element ={<Deleteproduct/>} /> 
                  <Route  path ='productInfo/:id'  element = {<ProductInfo/>}/>
-                 todo complete this later 
+                 {/* todo complete this later  */}
 
               </Route>
               
