@@ -52,6 +52,7 @@ const updateCoupen = asynchandler(async(req, res ) => {
         throw new CustomError("all fields required" , 400) 
     }
     const coupon = await Coupon.findOne(couponid)
+
     if(!coupon) {
         throw new CustomError("coupon not found " , 400)
     }
@@ -61,7 +62,7 @@ const updateCoupen = asynchandler(async(req, res ) => {
       code , discoount
     })
     
- const goupdated =    await updated.save()
+ const goupdated =  await updated.save()
 
  if(!goupdated)
  {
@@ -146,5 +147,6 @@ const getOnecoupon = asynchandler(async(req, res ) => {
      getAllCoupons ,
       getOnecoupon ,
        updateCoupen ,
-        deletecoupon, deleteAll
+        deletecoupon,
+         deleteAll
   }

@@ -2,8 +2,7 @@ import asynchandler from   '../services/asynchandler.js'
 import CustomError from '../utils/customError.js'
 import { Cart } from '../models/cart.js'
 import {Product} from '../models/product.schema.js'
-import { Coupon } from '../models/coupon.schema.js'
-import { User } from '../models/user.schmea.js'
+
 
 
 const addToCart = asynchandler(async (req, res) => {
@@ -51,7 +50,7 @@ const addToCart = asynchandler(async (req, res) => {
 res.json({
   success: true , 
   cart 
-})})
+})})  
 
 
 const getCart = asynchandler(async (req, res) => {
@@ -108,7 +107,7 @@ const deleteCart = asynchandler(async (req, res) => {
 
   const itemId  = req?.params?.id 
   const userId = req.user
-   console.log(req.body.body.data.cartId);
+  console.log(req.body.body.data.cartId);
   
 
   

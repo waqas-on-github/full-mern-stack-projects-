@@ -19,6 +19,7 @@ import { router as collectionrouter} from './routes/collection.js'
 import {router as couponrouter } from './routes/coupen.route.js' 
 import {router as  orderrouter  } from './routes/order.route.js'
 import {router as cartRouter} from  './routes/cart.route.js'
+import {router as addressRouter} from './routes/address.route.js'
  
 
 
@@ -48,6 +49,7 @@ app.use('/api/v1/collections' , collectionrouter)
 app.use('/api/v1/coupon' , couponrouter) 
 app.use('/api/v1/orders' , orderrouter)
 app.use('/api/v1/cart' , cartRouter )
+app.use('/api/v1/address' , addressRouter)
 
 
 // catch 404 and forward to error handler

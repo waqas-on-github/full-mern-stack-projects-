@@ -3,16 +3,8 @@ import mongoose from "mongoose";
 
 const orderschema = mongoose.Schema({
   product : {
-    type : [
-        {
-            productId  : {
-                ref : "Product" , 
-                type : mongoose.Schema.Types.ObjectId
-            }, 
-            count : Number , 
-            price : Number 
-        }
-    ]
+     ref :"Cart", 
+     type : mongoose.Schema.Types.ObjectId
   }, 
 
 
@@ -20,21 +12,12 @@ const orderschema = mongoose.Schema({
     ref: "User" , 
     type :  mongoose.Schema.Types.ObjectId , 
     required : true 
-  } , 
+  } 
 
-  address : {
-    type:String , 
-    required :true
-  } , 
-  
-  amount  :{
-    type : Number , 
-    required : true 
-  } , 
-  phone : {
-    type  : Number ,
-     required : true
-  }  , 
+  , address : {
+    ref :"Address"
+    , type : mongoose.Schema.Types.ObjectId
+  }, 
 
   coupon  : String , 
   transitionId :  String , 

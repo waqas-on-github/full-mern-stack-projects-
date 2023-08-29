@@ -137,6 +137,7 @@ const deleteproduct = asynchandler(async (req, res) => {
       deletedresult,
       deletedProduct,
     });
+    
   } catch (error) {
     throw new CustomError("Failed to delete product", 400);
   }

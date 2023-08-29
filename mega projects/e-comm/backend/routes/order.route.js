@@ -5,8 +5,7 @@ import { authorize, isLoggedIn } from "../middlewares/authhandler.js";
 const router = Router() 
 
 
-router.post('/pay' , isLoggedIn , generateStripeOrderId )
-
+router.post('/payment_intent' , isLoggedIn , generateStripeOrderId )
 
 export {
     router

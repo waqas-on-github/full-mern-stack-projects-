@@ -2,54 +2,72 @@ import asynchandler from "../services/asynchandler.js";
 import CustomError from "../utils/customError.js";
 import {Order} from '../models/order.schema.js'
 import {Product} from '../models/product.schema.js'
-import { Coupon } from "../models/coupon.schema.js";
+import {Cart} from '../models/cart.js'
+import { UserAddress } from "../models/address.js";
 import Stripe from "stripe";
 const stripe = new  Stripe(process.env.stripe_key)
 
-const generateStripeOrderId = asynchandler (async (req, res ) => {
-    const {products , couponCode  } = req.body  
+// getiing cart 
 
-    console.log(req.body);
 
+
+// getting adderss 
+
+
+// calculating amount 
+// hitting payment gateway api 
+// sending secure url whic we get from payment gateway api
+// order conformation 
+
+
+const generateStripeOrderId = async (req, res ) => {
+
+
+   
 
     
-    if (!products || products.length === 0) {
-        throw new CustomError("No product found", 400)
-    }
+    const userId = req.user._id.toHexString()
+   if(!userId) {
+    throw new CustomError("log in to contenue " , 400)
+   }
+
+    // getting products from user  cart 
+  const cartItems = await Cart.find({owner : userId})   
+
+// checking cart have products 
+if(!cartItems  || cartItems.length === 0 ) {
+    throw new CustomError("no products found " , 400)
+
+}
 
 
-    let totalAmount = 0
-    let discountAmount = 0
 
+let totalAmount = 0
 
-    // get product by db call and calculate price based on db call 
+const productPriceCalc = Promise.all(
+    cartItems[0].items.map( async ( item) => {
 
+        const ProductFromDb = await Product.findById(item.productId)
+         if(!ProductFromDb) {
+            throw new CustomError("product not found" , 400)
+         }
 
-     let productPriceCalc = Promise.all (
-         products.map( async (product) => {
+          if(1===11){
+            throw new CustomError("product out of stock " , 401 ) }
+        totalAmount += (ProductFromDb.price * item.quantity)
+       
+    })
 
-         const producByDb = await Product.findById(product._id)
-            if(!producByDb) {
-                throw new CustomError("product not found" , 400)
-            }
+)
 
-              if(producByDb.stock < product.count) {
-                return res.status(400).json({
-                    error: "Product quantity not in stock" 
-                })
-              }
+  await productPriceCalc
 
-             totalAmount += producByDb.price * product.count;
+console.log(totalAmount);
 
-         })
-     )
-
-     await productPriceCalc;
-
-    // create payment intent 
+// create payment intent 
 
     const paymentIntent = await stripe.paymentIntents.create({
-        amount: 1099 * 100 , 
+        amount: totalAmount , 
         currency: 'usd',
         payment_method_types: ['card'],
       });
@@ -60,14 +78,15 @@ const generateStripeOrderId = asynchandler (async (req, res ) => {
 
 
       res.status(200).json({
-        success : true , 
+        success : true ,    
         message : "payment intent created successfully " , 
         paymentIntent : paymentIntent.client_secret
 
       })
+       
 
 
-})
+}
 
 
 // Todo: add order in database and update product stock
@@ -93,6 +112,8 @@ export const updateOrderStatus = asynchandler(async(req, res) => {
 })
 
 
+
+
 export  {
-    generateStripeOrderId
+    generateStripeOrderId, 
 }
