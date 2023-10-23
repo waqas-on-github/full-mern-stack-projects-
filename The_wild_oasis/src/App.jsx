@@ -1,25 +1,36 @@
-/* eslint-disable react/prop-types */
-import styled, { css } from 'styled-components'
-import './App.css'
+import { BrowserRouter, Route, Routes  , Navigate } from "react-router-dom"
+import Dashboard from "./pages/Dashboard"
+import Bookings from "./pages/Bookings"
+import Cabins from "./pages/Cabins"
+import User from "./pages/User"
+import Setting from "./pages/Setting"
+import Account from "./pages/Account"
+import PageNotFound from "./pages/PageNotFound"
+import GlobalStyles from "./styles/GlobleStyles"
+import AppLayout from "./ui/AppLayout"
 
-function App() {
- const H1 = styled.h1`
-  
-  ${props => props.type==="borderd"?  css`border: 1px solid red` : null };
-  &:hover {
-    background-color : red;
-    padding:2rem ;
-  }
- `;
 
+const App = () => {
   return (
-    <>
-    <H1 type='borderd' >hello</H1>
-    <H1 as="button" > click me  </H1>
-    </>
+    <> 
+    <GlobalStyles/>
+    <BrowserRouter>
+    <Routes>
+       <Route element={<AppLayout/>} > 
+        <Route index element={<Navigate replace to="dashboard" />} />
+        <Route path="dashboard" element={<Dashboard />} />
+        <Route path="bookings" element={<Bookings />} />
+        <Route path="cabins" element={<Cabins />} />
+        <Route path="users" element={<User />} />
+        <Route path="settings" element={<Setting />} />
+      </Route>
+        <Route path="account" element={<Account />} />
+        <Route path="*" element ={<PageNotFound/>}/>
+
+    </Routes>
+  </BrowserRouter>
+  </>
   )
 }
 
 export default App
-
-
