@@ -5,7 +5,8 @@ async function getCabins() {
     let { data, error } = await supabase
       .from('cabins')
       .select('*');
-
+      
+      
     if (error) {
       console.error(error);
       throw new Error("Error fetching cabins");
@@ -20,6 +21,8 @@ async function getCabins() {
     console.error(error);
     throw error;
   }
+
+
 }
 
 export { getCabins };
