@@ -54,7 +54,7 @@ export default function CabinTable() {
       <div>Discount</div>
       <div></div>
      </TableHeader>
-      {data.map(cabin => <CabinRow  cabin = {cabin} key={cabin.id}/> ) }
+      {data?.map(cabin => <CabinRow  cabin = {cabin} key={cabin.id}/> ) }
     </Table>
   )
 }
