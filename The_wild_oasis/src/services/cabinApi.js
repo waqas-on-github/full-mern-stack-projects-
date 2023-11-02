@@ -97,5 +97,10 @@ async function createCabin(cabinData, id ) {
 
 
 
+ async function editCabin (cabinData , id ) {
+  
+ }  
+
+
 export { getCabins, deleteCabin ,createCabin };
 

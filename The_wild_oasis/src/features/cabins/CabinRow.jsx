@@ -4,6 +4,7 @@ import { formatCurrency } from "../../utils/helper";
 import { useDeleteCabin } from "./useDeleteCabin";
 import { useState } from "react";
 import CreateCabinForm from "./CreateCabinForm";
+import {  HiPencil, HiTrash } from "react-icons/hi2";
 
 const TableRow = styled.div`
   display: grid;
@@ -49,7 +50,8 @@ export default function CabinRow({ cabin }) {
   const {mutate , isLoading } = useDeleteCabin()
   const [showEdit , setshowEdit ] = useState(false)
 
-  const { id, discount, image, maxCapacity, name, regularPrice } = cabin;
+  const { id, discount, image, maxCapacity, name, regularPrice  } = cabin;
+
 
   return (
     <> 
@@ -60,12 +62,10 @@ export default function CabinRow({ cabin }) {
       <Price> {formatCurrency(regularPrice)} </Price>
       <Discount> {discount} </Discount>
    <div>
-      <button onClick={() => {setshowEdit(!showEdit)}} > edit</button>
+      <button onClick={() => {setshowEdit(!showEdit)}} > <HiPencil/></button>
+      <button disabled={isLoading} onClick={() => mutate(id)}><HiTrash/></button>
 
-      <button disabled={isLoading} onClick={() => mutate(id)}>
-        Delete
-      </button>
-      </div>
+    </div>
     </TableRow>
       {showEdit && <CreateCabinForm editToCabin = {cabin} />}
     </>
