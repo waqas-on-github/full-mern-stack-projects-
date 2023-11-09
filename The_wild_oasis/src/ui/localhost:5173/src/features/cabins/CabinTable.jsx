@@ -34,6 +34,7 @@ export default function CabinTable() {
   const [searchParams ] = useSearchParams()
     const filterdvalue =  searchParams.get("discount") || "all" ;
     const sortedValue = searchParams.get("sortBy") || 'A-Z';
+    
   
   
   
@@ -43,8 +44,6 @@ export default function CabinTable() {
   })
   
   
-
-  console.log(data );
   if(isLoading) {
     return <Spinner/>
   }
@@ -61,36 +60,16 @@ export default function CabinTable() {
     filterdCabins= data.filter((singleCabin) => singleCabin.discount>0)
   }
 
-
-
    let sortedCabins = filterdCabins ;
    const [field , sortByValue] = sortedValue.split('-');
    if(field === "name" && sortByValue === "asc"){
-    sortedCabins = filterdCabins.sort((a, b) => a.name.localeCompare(b.name))
+    sortedCabins = filterdCabins.sort()
    }
   
-   if(field === "name" && sortByValue === "desc"){
-    sortedCabins = filterdCabins.sort((a, b) => b.name.localeCompare(a.name) )
-   }
-  
-  if( field === "regularPrice"  && sortByValue=== "asc")
-{
-  sortedCabins = filterdCabins.sort((a, b ) => a.regularPrice - b.regularPrice)
-} 
-
-if( field ==="regularPrice" && sortByValue ==="desc") {
-  sortedCabins = filterdCabins.sort((a,b) => b.regularPrice - a.regularPrice)
-}
   
 
-if(field === "maxCapacity" && sortByValue ==="asc") {
-  sortedCabins = filterdCabins.sort((a, b ) => a.maxCapacity - b.maxCapacity)
-}
 
 
-if(field === "maxCapacity" && sortByValue ==="desc") {
-  sortedCabins = filterdCabins.sort((a, b ) => b.maxCapacity - a.maxCapacity)
-}
 
 
 

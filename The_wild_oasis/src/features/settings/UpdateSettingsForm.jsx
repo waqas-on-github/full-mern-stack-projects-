@@ -9,6 +9,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { useValidate } from './useValidate';
 
 function UpdateSettingsForm({data}) {
+  
 const {schema} = useValidate()
 
 // getting data from setting api 
@@ -21,7 +22,7 @@ minBookingLength: data?.minBookingLength
 }
 // data validation 
 
-const {register, handleSubmit, reset, formState, control } = useForm({
+const {register, handleSubmit,  formState, control } = useForm({
    defaultValues :  values, 
    resolver : yupResolver(schema)
 })
